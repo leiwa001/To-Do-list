@@ -72,6 +72,11 @@ class Front:
             self.task_label.config(text="Die Aufgabe '" + task + "' wurde gespeichert!")
         self.label_loeschen_eingabe()
 
+        # mit Enter bestätigen Hilfsfunktion
+
+    def callback(self, event):
+        self.button_action_eingabefeld()
+
     def button_action_speichern(self):
         self.speicher_label.config(text="Ihre Aufgaben wurden gespeichert!")
         self.label_loeschen_speichern()
@@ -114,10 +119,6 @@ class Front:
         self.aufgabenliste.delete(self.aufgabenliste.edit_item)
         self.aufgabenliste.insert(self.aufgabenliste.edit_item, new_data)
         event.widget.destroy()
-
-    # mit Enter bestätigen Hilfsfunktion
-    def callback(self, event):
-        self.button_action_eingabefeld()
 
     # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
     def label_loeschen_eingabe(self):

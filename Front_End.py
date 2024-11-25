@@ -1,9 +1,5 @@
 import tkinter as tk
 
-fenster = tk.Tk()
-fenster.geometry("1200x700")
-fenster.title("Die To-Do-Liste")
-
 
 class Front:
     def __init__(self, master):
@@ -72,7 +68,7 @@ class Front:
             self.task_label.config(text="Die Aufgabe '" + task + "' wurde gespeichert!")
         self.label_loeschen_eingabe()
 
-        # mit Enter bestätigen Hilfsfunktion
+
 
     def callback(self, event):
         self.button_action_eingabefeld()
@@ -140,7 +136,3 @@ class Front:
         self.task_label.config(text="")
         self.speicher_label.config(text="")
         self.lade_label.config(text="")
-
-
-e = Front(fenster)
-fenster.mainloop()

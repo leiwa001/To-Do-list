@@ -1,0 +1,16 @@
+[
+    {
+        "task": "hi",
+        "completed": false,
+        "beschreibung": "Beschreibung:\n\n",
+        "faelligkeit": "-nicht festgelegt-",
+        "erstellung": "28.11.2024"
+    },
+    {
+        "task": "ha",
+        "completed": false,
+        "beschreibung": "Beschreibung:\n\n",
+        "faelligkeit": "-nicht festgelegt-",
+        "erstellung": "28.11.2024"
+    }
+]

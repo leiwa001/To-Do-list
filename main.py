@@ -1,12 +1,18 @@
 
 import tkinter as tk
 
+from Back_End import Back
 from Front_End import Front
 
-fenster = tk.Tk()
-fenster.geometry("1200x700")
-fenster.title("Die To-Do-Liste")
+master = tk.Tk()
+master.geometry("1200x700")
+master.title("Die To-Do-Liste")
 
 
-e = Front(fenster)
-fenster.mainloop()
+back = Back()
+
+e = Front(master, back)
+
+
+
+master.mainloop()

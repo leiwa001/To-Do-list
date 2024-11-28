@@ -21,28 +21,45 @@ class Back:
             "erstellung": "",
         }
 
-    # eingabefeld zurücksetzen, task in liste anzeigen
-    def button_action_eingabefeld(self):
 
-        print("Eingabefeld")
+    def add_task(self,task):
+        print(task)
 
-        task = self.eingabefeld.get()
         if task == "":
-            self.task_label.config(text="Gib zuerst eine Aufgabe ein!")
+            print("leer")
+
         else:
             self.dictionary["task"] = task
             time = strftime("%d.%m.%Y")
             self.dictionary["erstellung"] = time
             new_dict = self.dictionary.copy()
+            self.dict_list.append(new_dict)
+
+            print(self.dict_list)
+
+
+
+
+
+
+
+
+    # eingabefeld zurücksetzen, task in liste anzeigen
+    def button_action_eingabefeld(self, task):
+
+
             bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
             self.task_label.config(text=bestaetigung_task)
-            self.dict_list.append(new_dict)
+
             self.eingabefeld.delete(0, tk.END)
             self.aufgabenliste.insert(tk.END, task)
-        self.label_loeschen_eingabe()
+
 
     # Funktion für Speichern in Json File
     def button_action_speichern(self):
+
+        print("spichern")
+
         self.speicher_label.config(text="Ihre Aufgaben wurden gespeichert!")
         path = Path("mylist.json")
         self.task_list = json.dumps(self.dict_list, indent=4)

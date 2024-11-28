@@ -17,11 +17,12 @@ class Front:
         anfangs_label.place(relx=0.05, rely=0.1)
 
         # Label, dass die Aufgabe als gespeichert anzeigt
-        task_label = tk.Label(fenster)
-        task_label.place(relx=0.36, rely=0.155)
+        self.task_label = tk.Label(fenster)
+        self.task_label.place(relx=0.36, rely=0.155)
 
         # Button, um task zu bestätigen
-        task_button = tk.Button(fenster, text="Bestätigen", command=back.button_action_eingabefeld, bd=5)
+        task_button = tk.Button(fenster, text="Bestätigen", command= lambda: [back.add_task(eingabefeld.get()),
+                                                                               change_label_add_task(self, eingabefeld.get())], bd=5)
         task_button.place(relx=0.41, rely=0.2, width=100, height=40)
 
         # Button, um Daten in Json zu speichern
@@ -63,3 +64,7 @@ class Front:
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
         loesch_label = tk.Label(fenster)
         loesch_label.place(relx=0.82, rely=0.92)
+
+        def change_label_add_task(self, task):
+            bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
+            self.task_label.config(text=bestaetigung_task)

@@ -48,9 +48,6 @@ class Back:
     def button_action_eingabefeld(self, task):
 
 
-            bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
-            self.task_label.config(text=bestaetigung_task)
-
             self.eingabefeld.delete(0, tk.END)
             self.aufgabenliste.insert(tk.END, task)
 

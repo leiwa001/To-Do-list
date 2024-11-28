@@ -8,9 +8,9 @@ class Front:
         fenster = master
 
         # Eingabefeld beschreiben und mit Enter bestätigen
-        eingabefeld = tk.Entry(fenster, bd=3, width=80)
-        eingabefeld.bind("<Return>", back.callback)
-        eingabefeld.place(relx=0.2, rely=0.1)
+        self.eingabefeld = tk.Entry(fenster, bd=3, width=80)
+        self.eingabefeld.bind("<Return>", back.callback)
+        self.eingabefeld.place(relx=0.2, rely=0.1)
 
         # Label s.Text
         anfangs_label = tk.Label(fenster, text="Gib deine Aufgabe ein: ")
@@ -21,8 +21,10 @@ class Front:
         self.task_label.place(relx=0.36, rely=0.155)
 
         # Button, um task zu bestätigen
-        task_button = tk.Button(fenster, text="Bestätigen", command= lambda: [back.add_task(eingabefeld.get()),
-                                                                               change_label_add_task(self, eingabefeld.get())], bd=5)
+        task_button = tk.Button(fenster, text="Bestätigen",
+                                 command= lambda: [back.add_task(self.eingabefeld.get()), 
+                                                   change_label_add_task(self, self.eingabefeld.get())], bd=5)
+
         task_button.place(relx=0.41, rely=0.2, width=100, height=40)
 
         # Button, um Daten in Json zu speichern
@@ -48,15 +50,15 @@ class Front:
         bearbeiten_button.place(relx=0.9, rely=0.03, width=100, height=40)
 
         # Auflistung hinzufügen
-        aufgabenliste = tk.Listbox(fenster, width=28, height=28, bd=5)
-        aufgabenliste.place(relx=0.79, rely=0.1)
+        self.aufgabenliste = tk.Listbox(fenster, width=28, height=28, bd=5)
+        self.aufgabenliste.place(relx=0.79, rely=0.1)
 
         scrollbar = tk.Scrollbar(fenster)
-        scrollbar.place(in_=aufgabenliste, relx=1.0, relheight=1.0, bordermode="outside")
-        aufgabenliste.config(yscrollcommand=scrollbar.set)
-        scrollbar.config(command=aufgabenliste.yview)
+        scrollbar.place(in_=self.aufgabenliste, relx=1.0, relheight=1.0, bordermode="outside")
+        self.aufgabenliste.config(yscrollcommand=scrollbar.set)
+        scrollbar.config(command=self.aufgabenliste.yview)
 
-        aufgabenliste.bind("<Double-1>", back.edit_start)
+        self.aufgabenliste.bind("<Double-1>", back.edit_start)
 
         aufgaben_label = tk.Label(fenster, text="Deine Aufgaben:")
         aufgaben_label.place(relx=0.79, rely=0.06)
@@ -68,3 +70,6 @@ class Front:
         def change_label_add_task(self, task):
             bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
             self.task_label.config(text=bestaetigung_task)
+            self.eingabefeld.delete(0, tk.END)
+            self.aufgabenliste.insert(tk.END, task)
+

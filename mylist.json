@@ -2,14 +2,21 @@
     {
         "task": "backen",
         "completed": true,
-        "beschreibung": "Beschreibung:\n\nff\n\n\n\n\n\n",
+        "beschreibung": "Beschreibung:\n\nff\n\n\n\n\n\n\n",
         "faelligkeit": "21.11.24",
         "erstellung": "29.11.2024"
     },
     {
-        "task": "laufen",
+        "task": "gehen",
+        "completed": true,
+        "beschreibung": "Beschreibung:\n\ngehen\n\n\n\n\n",
+        "faelligkeit": "29.11.24",
+        "erstellung": "29.11.2024"
+    },
+    {
+        "task": "hallo",
         "completed": false,
-        "beschreibung": "Beschreibung:\n\n\n",
+        "beschreibung": "Beschreibung:\n\n\n\n",
         "faelligkeit": "-nicht festgelegt-",
         "erstellung": "29.11.2024"
     }

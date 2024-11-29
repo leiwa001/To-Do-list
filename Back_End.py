@@ -21,7 +21,6 @@ class Back:
             "erstellung": "",
         }
 
-
     def add_task(self,task):
         print(task)
 
@@ -37,85 +36,95 @@ class Back:
 
             print(self.dict_list)
 
-
-
-
-
-
-
-
-    # eingabefeld zurücksetzen, task in liste anzeigen
-    def button_action_eingabefeld(self, task):
-
-
-            self.eingabefeld.delete(0, tk.END)
-            self.aufgabenliste.insert(tk.END, task)
-
-
     # Funktion für Speichern in Json File
     def button_action_speichern(self):
 
-        print("spichern")
-
-        self.speicher_label.config(text="Ihre Aufgaben wurden gespeichert!")
         path = Path("mylist.json")
         self.task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(self.task_list)
-        self.label_loeschen_speichern()
+
+
 
     # Funktion für Laden aus Json File
-    def button_action_laden(self):
-        self.lade_label.config(text="Ihre Aufgaben wurden geladen!")
+    def button_action_laden(self, aufgabenliste):
         path = Path("mylist.json")
         if path.exists():
             self.task_list = path.read_text()
             self.dict_list = json.loads(self.task_list)
             for wert in self.dict_list:
                 task = wert["task"]
-                self.aufgabenliste.insert(tk.END, task)
+                aufgabenliste.insert(tk.END, task)
         else:
             print("Keine Aufgaben gespeichert")
-        self.label_loeschen_laden()
+
 
     # Funktion für Lösch Button
-    def button_action_loeschen(self):
-        self.loesch_label.config(text="Die ausgewählte Aufgabe\n wurde gelöscht!")
-        self.sel_task = self.aufgabenliste.curselection()
-        self.aufgabenliste.delete(self.sel_task)
-        self.aufgabe_aus_liste_loeschen()
+    def button_action_loeschen(self, aufgabenliste):
 
-    # löscht ausgewählte aufgabe aus dict_list
-    def aufgabe_aus_liste_loeschen(self):
+        self.sel_task = aufgabenliste.curselection()
+        aufgabenliste.delete(self.sel_task)
+
         for i in range(100):
             if self.sel_task == (i,):
                 del self.dict_list[i]
-        self.label_loeschen_loeschen()
-
-    # mit Enter bestätigen Hilfsfunktion
-    def callback(self, event):
-        self.button_action_eingabefeld()
 
 
-    # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
-    def label_loeschen_eingabe(self):
-        self.speicher_label.config(text="")
-        self.lade_label.config(text="")
-        self.loesch_label.config(text="")
 
-    def label_loeschen_speichern(self):
-        self.task_label.config(text="")
-        self.lade_label.config(text="")
-        self.loesch_label.config(text="")
 
-    def label_loeschen_laden(self):
-        self.task_label.config(text="")
-        self.speicher_label.config(text="")
-        self.loesch_label.config(text="")
+    def get_task_newwindow(self, sel_task):
+        for i in range(100):
+            if sel_task == (i,):
+                sel_dict = self.dict_list[i]
+                task = sel_dict["task"]
+        return task
 
-    def label_loeschen_loeschen(self):
-        self.task_label.config(text="")
-        self.speicher_label.config(text="")
-        self.lade_label.config(text="")
+    def get_beschreibung_newindow(self, sel_task):
+        for i in range(100):
+            if sel_task == (i,):
+                sel_dict = self.dict_list[i]
+                beschreibung = sel_dict["beschreibung"]
+        return beschreibung
+
+
+    def get_sel_dict_newindow(self, sel_task):
+        for i in range(100):
+            if sel_task == (i,):
+                sel_dict = self.dict_list[i]
+        return sel_dict
+
+
+    # speichert Bearbeitung im new_window
+    def bearbeitung_speichern(self, eingabe, sel_dict):
+        sel_dict["beschreibung"] = eingabe
+
+        path = Path("mylist.json")
+        task_list = json.dumps(self.dict_list, indent=4)
+        path.write_text(task_list)
+
+
+    def get_datum(self, sel_dict, date):
+        sel_dict["faelligkeit"] = date
+
+
+    def get_check_status(self, sel_dict):
+        return "  Abgeschlossen!" if sel_dict["completed"] else "  Noch nicht abgeschlossen"
+    
+
+    def checkbox(self, sel_dict, variable):
+        if  variable == 1:
+            sel_dict["completed"] = True
+        else:
+            sel_dict["completed"] = False
+
+
+
+
+
+
+
+
+
+
 
     # Index des zu bearbeitenden Elements
     def edit_start(self, event):

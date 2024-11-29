@@ -98,6 +98,6 @@ class Back:
         else:
             sel_dict["completed"] = False
 
-    def accept_edit(self,dict_index, name):
+    def accept_edit(self, dict_index, name):
         sel_dict = self.dict_list[dict_index]
         sel_dict["task"] = name

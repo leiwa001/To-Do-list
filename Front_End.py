@@ -74,7 +74,9 @@ class Front:
         self.aufgabenliste.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.aufgabenliste.yview)
 
-        self.aufgabenliste.bind("<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"), back))
+        self.aufgabenliste.bind(
+            "<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"), back)
+        )
 
         aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:")
         aufgaben_label.place(relx=0.79, rely=0.06)
@@ -131,22 +133,22 @@ class Front:
         self.speicher_label.config(text="")
         self.lade_label.config(text="")
 
-
-
-
-
-
-
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index, back):
-
         print(index)
 
         self.aufgabenliste.edit_item = index
         text = self.aufgabenliste.get(index)
         y0 = self.aufgabenliste.bbox(index)[1]
         entry = tk.Entry(self.fenster, borderwidth=0, highlightthickness=1)
-        entry.bind("<Return>", lambda event: [self.accept_edit(event.widget.get()), back.accept_edit(index, event.widget.get()), event.widget.destroy()])
+        entry.bind(
+            "<Return>",
+            lambda event: [
+                self.accept_edit(event.widget.get()),
+                back.accept_edit(index, event.widget.get()),
+                event.widget.destroy(),
+            ],
+        )
         entry.bind("<Escape>", self.cancel_edit)
 
         entry.insert(0, text)
@@ -166,19 +168,6 @@ class Front:
 
         self.aufgabenliste.delete(self.aufgabenliste.edit_item)
         self.aufgabenliste.insert(self.aufgabenliste.edit_item, new_data)
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     def create_new_window(self, back):
         self.new_window = tk.Toplevel(self.fenster)

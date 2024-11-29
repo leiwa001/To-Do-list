@@ -9,14 +9,14 @@
     {
         "task": "gehen",
         "completed": true,
-        "beschreibung": "Beschreibung:\n\ngehen\n\n\n\n\n",
-        "faelligkeit": "29.11.24",
+        "beschreibung": "Beschreibung:\n\ngehen\n\n\n\n\n\n\n\n\n",
+        "faelligkeit": "27.11.24",
         "erstellung": "29.11.2024"
     },
     {
-        "task": "hallo",
+        "task": "spazieren",
         "completed": false,
-        "beschreibung": "Beschreibung:\n\n\n\n",
+        "beschreibung": "Beschreibung:\n\n\n",
         "faelligkeit": "-nicht festgelegt-",
         "erstellung": "29.11.2024"
     }

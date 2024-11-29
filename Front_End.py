@@ -8,7 +8,7 @@ class Front:
         self.fenster = master
 
         # Eingabefeld beschreiben und mit Enter bestätigen
-        self.eingabefeld = tk.Entry(self.fenster, bd=3, width=80)
+        self.eingabefeld = tk.Entry(self.fenster, bd=0, width=80, bg="#c3cccf", fg="black")
         self.eingabefeld.bind(
             "<Return>",
             lambda event: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
@@ -16,19 +16,19 @@ class Front:
         self.eingabefeld.place(relx=0.2, rely=0.1)
 
         # Label s.Text
-        anfangs_label = tk.Label(self.fenster, text="Gib deine Aufgabe ein: ")
+        anfangs_label = tk.Label(self.fenster, text="Gib deine Aufgabe ein: ", bg="#7991a2")
         anfangs_label.place(relx=0.05, rely=0.1)
 
         # Label, dass die Aufgabe als gespeichert anzeigt
-        self.task_label = tk.Label(self.fenster)
+        self.task_label = tk.Label(self.fenster, bg="#7991a2")
         self.task_label.place(relx=0.36, rely=0.155)
 
         # Button, um task zu bestätigen
         task_button = tk.Button(
             self.fenster,
             text="Bestätigen",
-            command=lambda: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
-            bd=5,
+            command=lambda: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())]
+            , bg="#3c3735", fg="white"
         )
 
         task_button.place(relx=0.41, rely=0.2, width=100, height=40)
@@ -37,8 +37,8 @@ class Front:
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
-            command=lambda: [back.button_action_speichern(), self.change_speicher_label()],
-            bd=5,
+            command=lambda: [back.button_action_speichern(), self.change_speicher_label()]
+            , bg="#535D55", fg="white"
         )
         speicher_button.place(relx=0.2, rely=0.85, width=100, height=40)
 
@@ -46,30 +46,31 @@ class Front:
         lade_button = tk.Button(
             self.fenster,
             text="Laden",
-            command=lambda: [back.button_action_laden(self.aufgabenliste), self.change_lade_label()],
-            bd=5,
+            command=lambda: [back.button_action_laden(self.aufgabenliste), self.change_lade_label()]
+            ,bg="#535D55", fg="white"
         )
         lade_button.place(relx=0.33, rely=0.85, width=100, height=40)
 
         # Label, um Speichern/Laden zu bestätigen
-        self.speicher_label = tk.Label(self.fenster)
+        self.speicher_label = tk.Label(self.fenster, bg="#7991a2")
         self.speicher_label.place(relx=0.34, rely=0.45)
-        self.lade_label = tk.Label(self.fenster)
+        self.lade_label = tk.Label(self.fenster, bg="#7991a2")
         self.lade_label.place(relx=0.36, rely=0.45)
 
         # Exit Button
-        exit_button = tk.Button(self.fenster, text="Beenden", command=self.fenster.quit, bd=5)
+        exit_button = tk.Button(self.fenster, text="Beenden", command=self.fenster.quit, bg="#8B0000", fg="white")
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
         # Bearbeiten-Button
-        bearbeiten_button = tk.Button(self.fenster, text="Bearbeiten", command=lambda: [self.create_new_window(back)], bd=5)
+        bearbeiten_button = tk.Button(self.fenster, text="Bearbeiten", 
+                                      command=lambda: [self.create_new_window(back)], bg="#c2cccf", fg="black")
         bearbeiten_button.place(relx=0.9, rely=0.03, width=100, height=40)
 
         # Auflistung hinzufügen
-        self.aufgabenliste = tk.Listbox(self.fenster, width=28, height=28, bd=5)
+        self.aufgabenliste = tk.Listbox(self.fenster, width=28, height=28, bd=0, bg="#c2cccf")
         self.aufgabenliste.place(relx=0.79, rely=0.1)
 
-        scrollbar = tk.Scrollbar(self.fenster)
+        scrollbar = tk.Scrollbar(self.fenster, bg="#FFF5EE")
         scrollbar.place(in_=self.aufgabenliste, relx=1.0, relheight=1.0, bordermode="outside")
         self.aufgabenliste.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.aufgabenliste.yview)
@@ -78,16 +79,16 @@ class Front:
             "<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"), back)
         )
 
-        aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:")
+        aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:", bg="#7991a2")
         aufgaben_label.place(relx=0.79, rely=0.06)
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
             command=lambda: [back.button_action_loeschen(self.aufgabenliste), self.change_loesch_label()],
-            bd=5,
+            bg="#535D55", fg="white"
         )
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
-        self.loesch_label = tk.Label(self.fenster)
+        self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
 
         back.button_action_laden(self.aufgabenliste)
@@ -172,6 +173,7 @@ class Front:
     def create_new_window(self, back):
         self.new_window = tk.Toplevel(self.fenster)
         self.new_window.geometry("1000x600")
+        self.new_window.config(bg="#E4B660")
 
         sel_task = self.aufgabenliste.curselection()
 
@@ -189,11 +191,11 @@ class Front:
                 back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict),
                 self.new_window.destroy(),
             ],
-            bd=5,
+            bg="#7e5a16", fg="white"
         )
-        speicher_button.place(relx=0.78, rely=0.85)
+        speicher_button.place(relx=0.78, rely=0.85, width=100, height=40)
 
-        task_label = tk.Label(self.new_window, text=f"Aufgabe: '{task}'", font=("Arial", 20))
+        task_label = tk.Label(self.new_window, text=f"Aufgabe: '{task}'", font=("Arial", 20), bg="#E4B660")
         task_label.place(relx=0.42, rely=0.05)
 
         self.textfeld = tk.Text(self.new_window, height=18, width=30)
@@ -209,20 +211,20 @@ class Front:
                 back.get_datum(self.sel_dict, self.cal.get_date()),
                 self.cal_label.config(text="Fälligkeitstermin: " + self.cal.get_date()),
             ],
-            bd=5,
+            bg="#7e5a16", fg="white"
         )
-        self.cal_button.place(relx=0.2, rely=0.85)
+        self.cal_button.place(relx=0.2, rely=0.85, width=100, height=40)
 
-        self.cal_label = tk.Label(self.new_window, font="Arial 12")
+        self.cal_label = tk.Label(self.new_window, font="Arial 12", bg="#E4B660")
         self.cal_label.place(relx=0.4, rely=0.85)
 
-        erstellt_label = tk.Label(self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12")
+        erstellt_label = tk.Label(self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12", bg="#E4B660")
         erstellt_label.place(relx=0.1, rely=0.18)
-        faellig_label = tk.Label(self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12")
+        faellig_label = tk.Label(self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12", bg="#E4B660")
         faellig_label.place(relx=0.1, rely=0.25)
 
         check_status = back.get_check_status(self.sel_dict)
-        self.check_label = tk.Label(self.new_window, text=check_status, font="Arial 12")
+        self.check_label = tk.Label(self.new_window, text=check_status, font="Arial 12", bg="#E4B660")
         self.check_label.place(relx=0.11, rely=0.32)
 
         self.var1 = tk.IntVar()
@@ -236,6 +238,7 @@ class Front:
             onvalue=1,
             offvalue=0,
             command=lambda: [back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
+            bg="#E4B660"
         )
         check.place(relx=0.09, rely=0.32)
 

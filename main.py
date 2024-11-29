@@ -6,6 +6,7 @@ from Front_End import Front
 master = tk.Tk()
 master.geometry("1200x700")
 master.title("Die To-Do-Liste")
+master.config(bg="#7991a2")
 
 
 back = Back()

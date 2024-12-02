@@ -16,6 +16,12 @@ class Back:
             "erstellung": "",
         }
 
+
+        self.user_list = ["user1", "user2", "user3"]
+
+    def get_user(self):
+        return self.user_list
+
     def add_task(self, task):
         print(task)
 

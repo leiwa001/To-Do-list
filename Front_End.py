@@ -11,35 +11,31 @@ class Front:
         self.master.title("Nutzer")
         self.master.config(bg="#E8D0B9")
 
-        user1_button = tk.Button(
+
+        self.user_list = back.get_user()
+
+                # Create a StringVar to hold the selected option
+        clicked = tk.StringVar()
+        clicked.set(self.user_list[0]) # Set the default value
+
+        # Create the dropdown menu
+        drop = tk.OptionMenu(self.master, clicked, *self.user_list)
+        drop.config(bg="#C0A08F",
+            fg="white",
+            font="Arial 20")
+
+        drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")
+        drop.place(relx = 0.3, rely=0.25, width=500, height=80)
+
+        choose_button = tk.Button(
             self.master,
-            text="User 1",
-            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user1")],
+            text="Auswählen",
+            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, clicked.get())],
             bg="#A09391",
             fg="white",
             font="Arial 20",
         )
-        user1_button.place(relx=0.3, rely=0.25, width=500, height=80)
-
-        user2_button = tk.Button(
-            self.master,
-            text="User 2",
-            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user2")],
-            bg="#C0A08F",
-            fg="white",
-            font="Arial 20",
-        )
-        user2_button.place(relx=0.3, rely=0.4, width=500, height=80)
-
-        user3_button = tk.Button(
-            self.master,
-            text="User 3",
-            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user3")],
-            bg="#C0C0C1",
-            fg="white",
-            font="Arial 20",
-        )
-        user3_button.place(relx=0.3, rely=0.55, width=500, height=80)
+        choose_button.place(relx=0.333, rely=0.65, width=400, height=80)
 
         self.master.mainloop()
 

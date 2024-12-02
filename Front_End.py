@@ -7,6 +7,11 @@ class Front:
     def __init__(self, master, back):
         self.fenster = master
 
+        self.fenster.geometry("1200x700")
+        self.fenster.title("Die To-Do-Liste")
+        self.fenster.config(bg="#7991a2")
+
+
         # Eingabefeld beschreiben und mit Enter bestätigen
         self.eingabefeld = tk.Entry(self.fenster, bd=0, width=80, bg="#c3cccf", fg="black")
         self.eingabefeld.bind(

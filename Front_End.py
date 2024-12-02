@@ -118,24 +118,24 @@ class Front:
         # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
 
     def label_loeschen_eingabe(self):
-        self.speicher_label.config(text="")
-        self.lade_label.config(text="")
-        self.loesch_label.config(text="")
+        self.speicher_label.config(text="\n")
+        self.lade_label.config(text="\n")
+        self.loesch_label.config(text="\n")
 
     def label_loeschen_speichern(self):
-        self.task_label.config(text="")
-        self.lade_label.config(text="")
-        self.loesch_label.config(text="")
+        self.task_label.config(text="\n")
+        self.lade_label.config(text="\n")
+        self.loesch_label.config(text="\n")
 
     def label_loeschen_laden(self):
-        self.task_label.config(text="")
-        self.speicher_label.config(text="")
-        self.loesch_label.config(text="")
+        self.task_label.config(text="\n")
+        self.speicher_label.config(text="\n")
+        self.loesch_label.config(text="\n")
 
     def label_loeschen_loeschen(self):
-        self.task_label.config(text="")
-        self.speicher_label.config(text="")
-        self.lade_label.config(text="")
+        self.task_label.config(text="\n")
+        self.speicher_label.config(text="\n")
+        self.lade_label.config(text="\n")
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index, back):
@@ -221,9 +221,11 @@ class Front:
         self.cal_label = tk.Label(self.new_window, font="Arial 12", bg="#E4B660")
         self.cal_label.place(relx=0.4, rely=0.85)
 
-        erstellt_label = tk.Label(self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12", bg="#E4B660")
+        erstellt_label = tk.Label(self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"],
+                                   font="Arial 12", bg="#E4B660")
         erstellt_label.place(relx=0.1, rely=0.18)
-        faellig_label = tk.Label(self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12", bg="#E4B660")
+        faellig_label = tk.Label(self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"],
+                                  font="Arial 12", bg="#E4B660")
         faellig_label.place(relx=0.1, rely=0.25)
 
         check_status = back.get_check_status(self.sel_dict)

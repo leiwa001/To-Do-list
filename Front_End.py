@@ -158,7 +158,7 @@ class Front:
         entry.insert(0, text)
         entry.selection_from(0)
         entry.selection_to("end")
-        entry.place(relx=0.8, y=y0 + 70, relwidth=0.2, width=-1)
+        entry.place(relx=0.788, y=y0 + 70, relwidth=0.2, width=-1)
         entry.focus_set()
 
     # bei 'ESC' berabeiten abbrechen

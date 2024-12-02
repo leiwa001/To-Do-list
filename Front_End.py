@@ -4,9 +4,9 @@ from tkcalendar import Calendar
 
 
 class Front:
-    def __init__(self, master, back):
+    def __init__(self, back):
 
-        self.master = master
+        self.master = tk.Tk()
 
         self.master.geometry("1200x700")
         self.master.title("Nutzer")
@@ -29,6 +29,8 @@ class Front:
                                                                                 bg="#C0C0C1", fg="white",
                                                                                 font="Arial 20")
         user3_button.place(relx=0.3, rely=0.55, width=500, height=80)
+
+        self.master.mainloop()
 
 
 
@@ -127,6 +129,11 @@ class Front:
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
         self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
+
+        self.back_button = tk.Button(self.fenster, text="Zurück",
+                                    command=lambda: [self.fenster.destroy(), self.__init__(back)], bg="#c2cccf", fg="black")
+        self.back_button.place(relx=0.05, rely=0.018, width=100, height=30)
+
 
         back.load_task(self.aufgabenliste, self.user)
 

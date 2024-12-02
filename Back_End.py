@@ -19,7 +19,6 @@ class Back:
     def add_task(self, task):
         print(task)
 
-
         if task == "":
             print("leer")
 
@@ -34,7 +33,6 @@ class Back:
 
     # Funktion für Speichern in Json File
     def save_task(self, user):
-
         if user == "user1":
             path = Path("mylist_user1.json")
         elif user == "user2":
@@ -47,7 +45,6 @@ class Back:
 
     # Funktion für Laden aus Json File
     def load_task(self, aufgabenliste, user):
-        
         if user == "user1":
             path = Path("mylist_user1.json")
         elif user == "user2":
@@ -55,7 +52,6 @@ class Back:
         elif user == "user3":
             path = Path("mylist_user3.json")
         if path.exists():
-
             self.task_list = path.read_text()
             self.dict_list = json.loads(self.task_list)
             for wert in self.dict_list:
@@ -103,7 +99,6 @@ class Back:
             path = Path("mylist_user2.json")
         elif user == "user3":
             path = Path("mylist_user3.json")
-
 
         task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(task_list)

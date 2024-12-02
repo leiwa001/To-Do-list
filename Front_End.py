@@ -5,37 +5,45 @@ from tkcalendar import Calendar
 
 class Front:
     def __init__(self, back):
-
         self.master = tk.Tk()
 
         self.master.geometry("1200x700")
         self.master.title("Nutzer")
         self.master.config(bg="#E8D0B9")
 
-        user1_button = tk.Button(self.master, text="User 1", command=lambda: [self.master.destroy(),
-                                                                               self.fenster_erstellen(back, "user1")],
-                                                                                 bg="#A09391", fg="white",
-                                                                                font="Arial 20")
+        user1_button = tk.Button(
+            self.master,
+            text="User 1",
+            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user1")],
+            bg="#A09391",
+            fg="white",
+            font="Arial 20",
+        )
         user1_button.place(relx=0.3, rely=0.25, width=500, height=80)
 
-        user2_button = tk.Button(self.master, text="User 2", command=lambda: [self.master.destroy(),
-                                                                               self.fenster_erstellen(back, "user2")],
-                                                                                 bg="#C0A08F", fg="white",
-                                                                                font="Arial 20")
+        user2_button = tk.Button(
+            self.master,
+            text="User 2",
+            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user2")],
+            bg="#C0A08F",
+            fg="white",
+            font="Arial 20",
+        )
         user2_button.place(relx=0.3, rely=0.4, width=500, height=80)
 
-        user3_button = tk.Button(self.master, text="User 3", command=lambda: [self.master.destroy(), 
-                                                                              self.fenster_erstellen(back, "user3")],
-                                                                                bg="#C0C0C1", fg="white",
-                                                                                font="Arial 20")
+        user3_button = tk.Button(
+            self.master,
+            text="User 3",
+            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, "user3")],
+            bg="#C0C0C1",
+            fg="white",
+            font="Arial 20",
+        )
         user3_button.place(relx=0.3, rely=0.55, width=500, height=80)
 
         self.master.mainloop()
 
-
-
     def fenster_erstellen(self, back, user):
-
         self.fenster = tk.Tk()
 
         self.user = user
@@ -44,7 +52,6 @@ class Front:
         self.fenster.geometry("1200x700")
         self.fenster.title(self.user)
         self.fenster.config(bg="#7991a2")
-
 
         # Eingabefeld beschreiben und mit Enter bestätigen
         self.eingabefeld = tk.Entry(self.fenster, bd=0, width=80, bg="#c3cccf", fg="black")
@@ -66,8 +73,9 @@ class Front:
         task_button = tk.Button(
             self.fenster,
             text="Bestätigen",
-            command=lambda: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())]
-            , bg="#3c3735", fg="white"
+            command=lambda: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
+            bg="#3c3735",
+            fg="white",
         )
 
         task_button.place(relx=0.41, rely=0.2, width=100, height=40)
@@ -76,8 +84,9 @@ class Front:
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
-            command=lambda: [back.save_task(self.user), self.change_speicher_label()]
-            , bg="#535D55", fg="white"
+            command=lambda: [back.save_task(self.user), self.change_speicher_label()],
+            bg="#535D55",
+            fg="white",
         )
         speicher_button.place(relx=0.2, rely=0.85, width=100, height=40)
 
@@ -85,8 +94,9 @@ class Front:
         lade_button = tk.Button(
             self.fenster,
             text="Laden",
-            command=lambda: [back.load_task(self.aufgabenliste, self.user), self.change_lade_label()]
-            ,bg="#535D55", fg="white"
+            command=lambda: [back.load_task(self.aufgabenliste, self.user), self.change_lade_label()],
+            bg="#535D55",
+            fg="white",
         )
         lade_button.place(relx=0.33, rely=0.85, width=100, height=40)
 
@@ -101,8 +111,9 @@ class Front:
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
         # Bearbeiten-Button
-        bearbeiten_button = tk.Button(self.fenster, text="Bearbeiten", 
-                                      command=lambda: [self.create_new_window(back)], bg="#c2cccf", fg="black")
+        bearbeiten_button = tk.Button(
+            self.fenster, text="Bearbeiten", command=lambda: [self.create_new_window(back)], bg="#c2cccf", fg="black"
+        )
         bearbeiten_button.place(relx=0.9, rely=0.03, width=100, height=40)
 
         # Auflistung hinzufügen
@@ -124,16 +135,21 @@ class Front:
             self.fenster,
             text="Löschen",
             command=lambda: [back.delete_task(self.aufgabenliste), self.change_loesch_label()],
-            bg="#535D55", fg="white"
+            bg="#535D55",
+            fg="white",
         )
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
         self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
 
-        self.back_button = tk.Button(self.fenster, text="Zurück",
-                                    command=lambda: [self.fenster.destroy(), self.__init__(back)], bg="#c2cccf", fg="black")
+        self.back_button = tk.Button(
+            self.fenster,
+            text="Zurück",
+            command=lambda: [self.fenster.destroy(), self.__init__(back)],
+            bg="#c2cccf",
+            fg="black",
+        )
         self.back_button.place(relx=0.05, rely=0.018, width=100, height=30)
-
 
         back.load_task(self.aufgabenliste, self.user)
 
@@ -240,7 +256,8 @@ class Front:
                 back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
                 self.new_window.destroy(),
             ],
-            bg="#7e5a16", fg="white"
+            bg="#7e5a16",
+            fg="white",
         )
         speicher_button.place(relx=0.78, rely=0.85, width=100, height=40)
 
@@ -260,18 +277,21 @@ class Front:
                 back.get_datum(self.sel_dict, self.cal.get_date()),
                 self.cal_label.config(text="Fälligkeitstermin: " + self.cal.get_date()),
             ],
-            bg="#7e5a16", fg="white"
+            bg="#7e5a16",
+            fg="white",
         )
         self.cal_button.place(relx=0.2, rely=0.85, width=100, height=40)
 
         self.cal_label = tk.Label(self.new_window, font="Arial 12", bg="#E4B660")
         self.cal_label.place(relx=0.4, rely=0.85)
 
-        erstellt_label = tk.Label(self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"],
-                                   font="Arial 12", bg="#E4B660")
+        erstellt_label = tk.Label(
+            self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12", bg="#E4B660"
+        )
         erstellt_label.place(relx=0.1, rely=0.18)
-        faellig_label = tk.Label(self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"],
-                                  font="Arial 12", bg="#E4B660")
+        faellig_label = tk.Label(
+            self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12", bg="#E4B660"
+        )
         faellig_label.place(relx=0.1, rely=0.25)
 
         check_status = back.get_check_status(self.sel_dict)
@@ -289,7 +309,7 @@ class Front:
             onvalue=1,
             offvalue=0,
             command=lambda: [back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
-            bg="#E4B660"
+            bg="#E4B660",
         )
         check.place(relx=0.09, rely=0.32)
 

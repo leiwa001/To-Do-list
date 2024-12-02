@@ -94,10 +94,13 @@ class Front:
         back.button_action_laden(self.aufgabenliste)
 
     def change_label_add_task(self, task):
-        bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
-        self.task_label.config(text=bestaetigung_task)
-        self.eingabefeld.delete(0, tk.END)
-        self.aufgabenliste.insert(tk.END, task)
+        if task == "":
+            self.task_label.config(text="Gib zuerst eine Aufgabe ein!")
+        else:
+            bestaetigung_task = "Die Aufgabe: '" + task + "' wurde gespeichert."
+            self.task_label.config(text=bestaetigung_task)
+            self.eingabefeld.delete(0, tk.END)
+            self.aufgabenliste.insert(tk.END, task)
         self.label_loeschen_eingabe()
 
     def change_speicher_label(self):

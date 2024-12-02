@@ -19,6 +19,7 @@ class Back:
     def add_task(self, task):
         print(task)
 
+
         if task == "":
             print("leer")
 
@@ -32,15 +33,29 @@ class Back:
             print(self.dict_list)
 
     # Funktion für Speichern in Json File
-    def button_action_speichern(self):
-        path = Path("mylist.json")
+    def save_task(self, user):
+
+        if user == "user1":
+            path = Path("mylist_user1.json")
+        elif user == "user2":
+            path = Path("mylist_user2.json")
+        elif user == "user3":
+            path = Path("mylist_user3.json")
+
         self.task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(self.task_list)
 
     # Funktion für Laden aus Json File
-    def button_action_laden(self, aufgabenliste):
-        path = Path("mylist.json")
+    def load_task(self, aufgabenliste, user):
+        
+        if user == "user1":
+            path = Path("mylist_user1.json")
+        elif user == "user2":
+            path = Path("mylist_user2.json")
+        elif user == "user3":
+            path = Path("mylist_user3.json")
         if path.exists():
+
             self.task_list = path.read_text()
             self.dict_list = json.loads(self.task_list)
             for wert in self.dict_list:
@@ -50,7 +65,7 @@ class Back:
             print("Keine Aufgaben gespeichert")
 
     # Funktion für Lösch Button
-    def button_action_loeschen(self, aufgabenliste):
+    def delete_task(self, aufgabenliste):
         self.sel_task = aufgabenliste.curselection()
         aufgabenliste.delete(self.sel_task)
 
@@ -79,10 +94,17 @@ class Back:
         return sel_dict
 
     # speichert Bearbeitung im new_window
-    def bearbeitung_speichern(self, eingabe, sel_dict):
+    def bearbeitung_speichern(self, eingabe, sel_dict, user):
         sel_dict["beschreibung"] = eingabe
 
-        path = Path("mylist.json")
+        if user == "user1":
+            path = Path("mylist_user1.json")
+        elif user == "user2":
+            path = Path("mylist_user2.json")
+        elif user == "user3":
+            path = Path("mylist_user3.json")
+
+
         task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(task_list)
 

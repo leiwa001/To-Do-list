@@ -5,10 +5,42 @@ from tkcalendar import Calendar
 
 class Front:
     def __init__(self, master, back):
-        self.fenster = master
+
+        self.master = master
+
+        self.master.geometry("1200x700")
+        self.master.title("Nutzer")
+        self.master.config(bg="#E8D0B9")
+
+        user1_button = tk.Button(self.master, text="User 1", command=lambda: [self.master.destroy(),
+                                                                               self.fenster_erstellen(back, "user1")],
+                                                                                 bg="#A09391", fg="white",
+                                                                                font="Arial 20")
+        user1_button.place(relx=0.3, rely=0.25, width=500, height=80)
+
+        user2_button = tk.Button(self.master, text="User 2", command=lambda: [self.master.destroy(),
+                                                                               self.fenster_erstellen(back, "user2")],
+                                                                                 bg="#C0A08F", fg="white",
+                                                                                font="Arial 20")
+        user2_button.place(relx=0.3, rely=0.4, width=500, height=80)
+
+        user3_button = tk.Button(self.master, text="User 3", command=lambda: [self.master.destroy(), 
+                                                                              self.fenster_erstellen(back, "user3")],
+                                                                                bg="#C0C0C1", fg="white",
+                                                                                font="Arial 20")
+        user3_button.place(relx=0.3, rely=0.55, width=500, height=80)
+
+
+
+    def fenster_erstellen(self, back, user):
+
+        self.fenster = tk.Tk()
+
+        self.user = user
+        print(self.user)
 
         self.fenster.geometry("1200x700")
-        self.fenster.title("Die To-Do-Liste")
+        self.fenster.title(self.user)
         self.fenster.config(bg="#7991a2")
 
 
@@ -42,7 +74,7 @@ class Front:
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
-            command=lambda: [back.button_action_speichern(), self.change_speicher_label()]
+            command=lambda: [back.save_task(self.user), self.change_speicher_label()]
             , bg="#535D55", fg="white"
         )
         speicher_button.place(relx=0.2, rely=0.85, width=100, height=40)
@@ -51,7 +83,7 @@ class Front:
         lade_button = tk.Button(
             self.fenster,
             text="Laden",
-            command=lambda: [back.button_action_laden(self.aufgabenliste), self.change_lade_label()]
+            command=lambda: [back.load_task(self.aufgabenliste, self.user), self.change_lade_label()]
             ,bg="#535D55", fg="white"
         )
         lade_button.place(relx=0.33, rely=0.85, width=100, height=40)
@@ -89,14 +121,16 @@ class Front:
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
-            command=lambda: [back.button_action_loeschen(self.aufgabenliste), self.change_loesch_label()],
+            command=lambda: [back.delete_task(self.aufgabenliste), self.change_loesch_label()],
             bg="#535D55", fg="white"
         )
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
         self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
 
-        back.button_action_laden(self.aufgabenliste)
+        back.load_task(self.aufgabenliste, self.user)
+
+        self.fenster.mainloop()
 
     def change_label_add_task(self, task):
         if task == "":
@@ -196,7 +230,7 @@ class Front:
             self.new_window,
             text="Speichern",
             command=lambda: [
-                back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict),
+                back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
                 self.new_window.destroy(),
             ],
             bg="#7e5a16", fg="white"

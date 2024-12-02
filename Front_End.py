@@ -11,21 +11,18 @@ class Front:
         self.master.title("Nutzer")
         self.master.config(bg="#E8D0B9")
 
-
         self.user_list = back.get_user()
 
-                # Create a StringVar to hold the selected option
+        # Create a StringVar to hold the selected option
         clicked = tk.StringVar()
-        clicked.set(self.user_list[0]) # Set the default value
+        clicked.set(self.user_list[0])  # Set the default value
 
         # Create the dropdown menu
         drop = tk.OptionMenu(self.master, clicked, *self.user_list)
-        drop.config(bg="#C0A08F",
-            fg="white",
-            font="Arial 20")
+        drop.config(bg="#C0A08F", fg="white", font="Arial 20")
 
         drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")
-        drop.place(relx = 0.3, rely=0.25, width=500, height=80)
+        drop.place(relx=0.3, rely=0.25, width=500, height=80)
 
         choose_button = tk.Button(
             self.master,
@@ -35,7 +32,7 @@ class Front:
             fg="white",
             font="Arial 20",
         )
-        choose_button.place(relx=0.333, rely=0.65, width=400, height=80)
+        choose_button.place(relx=0.34, rely=0.65, width=400, height=80)
 
         self.master.mainloop()
 

@@ -16,7 +16,6 @@ class Back:
             "erstellung": "",
         }
 
-
         self.user_list = ["user1", "user2", "user3"]
 
     def get_user(self):

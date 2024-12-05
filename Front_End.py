@@ -27,15 +27,21 @@ class Front:
         choose_button = tk.Button(
             self.master,
             text="Auswählen",
-            command=lambda: [self.master.destroy(), self.fenster_erstellen(back, clicked.get())],
+            command=lambda: [self.fenster_erstellen(back, clicked.get())],
             bg="#A09391",
             fg="white",
             font="Arial 20",
         )
         choose_button.place(relx=0.3, rely=0.4, width=500, height=80)
 
-
-        new_user_button = tk.Button(self.master, text="User hinzufügen", command= lambda: self.new_user(back),  bg="#C0C0C1", fg="white", font="Arial 20")
+        new_user_button = tk.Button(
+            self.master,
+            text="User hinzufügen",
+            command=lambda: self.new_user(back),
+            bg="#C0C0C1",
+            fg="white",
+            font="Arial 20",
+        )
         new_user_button.place(relx=0.05, rely=0.8, width=270, height=60)
 
         self.master.mainloop()
@@ -49,20 +55,25 @@ class Front:
         new_user_window.config(bg="#A67F78")
 
         entry = tk.Entry(new_user_window, bd=0, width=80, bg="#E1DCD9", fg="black")
+        entry.bind(
+            "<Return>",
+            lambda event: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())])
+
         entry.place(relx=0.2, rely=0.2)
 
-        new_user_label = tk.Label(new_user_window, text="Geben Sie den neuen Usernamen ein:", bg="#A67F78", font=("Arial", 15))
+        new_user_label = tk.Label(
+            new_user_window, text="Geben Sie den neuen Usernamen ein:", bg="#A67F78", font=("Arial", 15)
+        )
         new_user_label.place(relx=0.33, rely=0.1)
 
-        accept_button = tk.Button(new_user_window, text="Akzeptieren", 
-                                  command= lambda: [back.new_user_back(entry.get()), self.fenster_erstellen(back, entry.get())],
-                                    bg="#8F8681",
-                                    fg="white")
+        accept_button = tk.Button(
+            new_user_window,
+            text="Akzeptieren",
+            command=lambda: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())],
+            bg="#8F8681",
+            fg="white",
+        )
         accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
-
-
-
-
 
     def fenster_erstellen(self, back, user):
         self.master.destroy()
@@ -110,7 +121,7 @@ class Front:
             bg="#535D55",
             fg="white",
         )
-        speicher_button.place(relx=0.2, rely=0.85, width=100, height=40)
+        speicher_button.place(relx=0.56, rely=0.85, width=100, height=40)
 
         # Button, um Daten aus Json zu laden
         lade_button = tk.Button(
@@ -120,7 +131,7 @@ class Front:
             bg="#535D55",
             fg="white",
         )
-        lade_button.place(relx=0.33, rely=0.85, width=100, height=40)
+        lade_button.place(relx=0.705, rely=0.85, width=100, height=40)
 
         # Label, um Speichern/Laden zu bestätigen
         self.speicher_label = tk.Label(self.fenster, bg="#7991a2")
@@ -129,7 +140,7 @@ class Front:
         self.lade_label.place(relx=0.36, rely=0.45)
 
         # Exit Button
-        exit_button = tk.Button(self.fenster, text="Beenden", command=self.fenster.quit, bg="#8B0000", fg="white")
+        exit_button = tk.Button(self.fenster, text="Beenden", command= lambda: self.fenster.destroy(), bg="#8B0000", fg="white")
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
         # Bearbeiten-Button
@@ -153,6 +164,7 @@ class Front:
 
         aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:", bg="#7991a2")
         aufgaben_label.place(relx=0.79, rely=0.06)
+
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
@@ -161,6 +173,7 @@ class Front:
             fg="white",
         )
         loesch_button.place(relx=0.85, rely=0.85, width=100, height=40)
+
         self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
 
@@ -172,6 +185,14 @@ class Front:
             fg="black",
         )
         self.back_button.place(relx=0.05, rely=0.018, width=100, height=30)
+
+
+        user_loesch_button = tk.Button(self.fenster, text="User löschen",
+                                       command= lambda: [self.delete_user(self.user), back.del_user(self.user), self.fenster.destroy(), self.__init__(back)], bg="#8B0000", fg="white")
+
+        user_loesch_button.place(relx=0.215, rely=0.85, width=100, height=40)
+
+
 
         back.load_task(self.aufgabenliste, self.user)
 
@@ -220,6 +241,10 @@ class Front:
         self.task_label.config(text="\n")
         self.speicher_label.config(text="\n")
         self.lade_label.config(text="\n")
+
+
+    def delete_user(self, user):
+        print("delete" + user )
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index, back):

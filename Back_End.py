@@ -26,7 +26,7 @@ class Back:
             self.user_list = json.loads(task_list)
         else:
             task_list = json.dumps(self.user_list)
-            path.write_text(task_list )
+            path.write_text(task_list)
 
         task_list = path.read_text()
         self.user_list = json.loads(task_list)
@@ -36,11 +36,8 @@ class Back:
         self.user_list.append(username)
         path = Path("user_list.json")
         task_list = json.dumps(self.user_list)
-        path.write_text(task_list )
+        path.write_text(task_list)
         print(self.user_list)
-
-
-
 
     def get_user(self):
         return self.user_list
@@ -62,24 +59,19 @@ class Back:
 
     # Funktion für Speichern in Json File
     def save_task(self, user):
-        if user == "user1":
-            path = Path("mylist_user1.json")
-        elif user == "user2":
-            path = Path("mylist_user2.json")
-        elif user == "user3":
-            path = Path("mylist_user3.json")
+
+        path_name = f"mylist_{user}.json"
+        path = Path(path_name)
 
         self.task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(self.task_list)
 
     # Funktion für Laden aus Json File
     def load_task(self, aufgabenliste, user):
-        if user == "user1":
-            path = Path("mylist_user1.json")
-        elif user == "user2":
-            path = Path("mylist_user2.json")
-        elif user == "user3":
-            path = Path("mylist_user3.json")
+
+        path_name = f"mylist_{user}.json"
+        path = Path(path_name)
+
         if path.exists():
             self.task_list = path.read_text()
             self.dict_list = json.loads(self.task_list)
@@ -122,12 +114,8 @@ class Back:
     def bearbeitung_speichern(self, eingabe, sel_dict, user):
         sel_dict["beschreibung"] = eingabe
 
-        if user == "user1":
-            path = Path("mylist_user1.json")
-        elif user == "user2":
-            path = Path("mylist_user2.json")
-        elif user == "user3":
-            path = Path("mylist_user3.json")
+        path_name = f"mylist_{user}.json"
+        path = Path(path_name)
 
         task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(task_list)
@@ -147,3 +135,12 @@ class Back:
     def accept_edit(self, dict_index, name):
         sel_dict = self.dict_list[dict_index]
         sel_dict["task"] = name
+
+
+    def del_user(self, user):
+        self.user_list.remove(user)
+        print(self.user_list)
+
+        path = Path("user_list.json")
+        task_list = json.dumps(self.user_list)
+        path.write_text(task_list)

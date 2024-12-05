@@ -1,29 +1,19 @@
-from tkinter import*
-import os, fnmatch
+import tkinter as tk
 
-def submitForm():    
-    strFile = optVariable.get()
-    # Print the selected value from Option (Combo Box)    
-    if (strFile !=''):        
-        print('Selected Value is : ' + strFile)
+def on_right_click(event):
+    context_menu.post(event.x_root, event.y_root)
 
+root = tk.Tk()
+root.title("Rechtsklick-Menü Beispiel")
 
-root = Tk()
-root.geometry('500x500')
-root.title("Demo Form ")
+# Erstelle ein Kontextmenü
+context_menu = tk.Menu(root, tearoff=0)
+context_menu.add_command(label="Option 1")
+context_menu.add_command(label="Option 2")
+context_menu.add_separator()
+context_menu.add_command(label="Beenden", command=root.quit)
 
-
-label_2 = Label(root, text="Choose Files ",width=20,font=("bold", 10))
-label_2.place(x=68,y=250)
-
-flist = fnmatch.filter(os.listdir('.'), '*.mp4')
-optVariable = StringVar(root)
-optVariable.set("   Select   ") # default value
-optFiles = OptionMenu(root, optVariable,*flist)
-optFiles.pack()
-optFiles.place(x=240,y=250)
-
-Button(root, text='Submit', command=submitForm, width=20,bg='brown',fg='white').place(x=180,y=380)
-
+# Binde den Rechtsklick an die Funktion
+root.bind("<Button-3>", on_right_click)
 
 root.mainloop()

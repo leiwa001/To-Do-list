@@ -13,17 +13,18 @@ class Front:
 
         self.user_list = back.get_user()
 
-        # Create a StringVar to hold the selected option
+        # StringVar erstellen
         clicked = tk.StringVar()
-        clicked.set(self.user_list[0])  # Set the default value
+        clicked.set(self.user_list[0])  #default value setzen
 
-        # Create the dropdown menu
+        # dropdown menu erstellen
         drop = tk.OptionMenu(self.master, clicked, *self.user_list)
         drop.config(bg="#C0A08F", fg="white", font="Arial 20")
 
-        drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")
+        drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")    #menüzeilen konfigurieren
         drop.place(relx=0.3, rely=0.2, width=500, height=80)
 
+        # Button um User auszuwählen
         choose_button = tk.Button(
             self.master,
             text="Auswählen",
@@ -34,6 +35,7 @@ class Front:
         )
         choose_button.place(relx=0.3, rely=0.4, width=500, height=80)
 
+        #Button 'User hinzufügen'
         new_user_button = tk.Button(
             self.master,
             text="User hinzufügen",
@@ -46,8 +48,8 @@ class Front:
 
         self.master.mainloop()
 
+    # Fenster um neuen Benutzer zu erstellen
     def new_user(self, back):
-        print("new user")
 
         new_user_window = tk.Toplevel(self.master)
         new_user_window.title("Neuer User")
@@ -76,6 +78,7 @@ class Front:
         )
         accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
 
+    # Task-Fenster erstellen
     def fenster_erstellen(self, back, user):
         self.master.destroy()
         self.fenster = tk.Tk()
@@ -87,7 +90,7 @@ class Front:
         self.fenster.title(self.user)
         self.fenster.config(bg="#7991a2")
 
-        # Eingabefeld beschreiben und mit Enter bestätigen
+        # Eingabefeld konfigurieren und mit Enter bestätigen
         self.eingabefeld = tk.Entry(self.fenster, bd=0, width=80, bg="#c3cccf", fg="black")
         self.eingabefeld.bind(
             "<Return>",
@@ -156,11 +159,13 @@ class Front:
         self.aufgabenliste = tk.Listbox(self.fenster, width=28, height=28, bd=0, bg="#c2cccf")
         self.aufgabenliste.place(relx=0.79, rely=0.1)
 
+        # Scrollbar der Liste
         scrollbar = tk.Scrollbar(self.fenster, bg="#FFF5EE")
         scrollbar.place(in_=self.aufgabenliste, relx=1.0, relheight=1.0, bordermode="outside")
         self.aufgabenliste.config(yscrollcommand=scrollbar.set)
         scrollbar.config(command=self.aufgabenliste.yview)
 
+        # mit Doppelklick bearbeiten
         self.aufgabenliste.bind(
             "<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"), back)
         )
@@ -168,6 +173,7 @@ class Front:
         aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:", bg="#7991a2")
         aufgaben_label.place(relx=0.79, rely=0.06)
 
+        #Button um task zu löschen
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
@@ -180,6 +186,7 @@ class Front:
         self.loesch_label = tk.Label(self.fenster, bg="#7991a2")
         self.loesch_label.place(relx=0.82, rely=0.92)
 
+        # Button zurück zur User-Auswahl
         self.back_button = tk.Button(
             self.fenster,
             text="Zurück",
@@ -189,6 +196,7 @@ class Front:
         )
         self.back_button.place(relx=0.05, rely=0.018, width=100, height=30)
 
+        # Button um User zu löschen
         user_loesch_button = tk.Button(
             self.fenster,
             text="User löschen",
@@ -208,6 +216,7 @@ class Front:
 
         self.fenster.mainloop()
 
+    # Ändert task-label und fügt task in liste ein
     def change_label_add_task(self, task):
         if task == "":
             self.task_label.config(text="Gib zuerst eine Aufgabe ein!")
@@ -230,8 +239,7 @@ class Front:
         self.loesch_label.config(text="Die ausgewählte Aufgabe\n wurde gelöscht!")
         self.label_loeschen_loeschen()
 
-        # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
-
+    # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
     def label_loeschen_eingabe(self):
         self.speicher_label.config(text="\n")
         self.lade_label.config(text="\n")
@@ -291,6 +299,7 @@ class Front:
         self.aufgabenliste.delete(self.aufgabenliste.edit_item)
         self.aufgabenliste.insert(self.aufgabenliste.edit_item, new_data)
 
+    # neues Fenster für Bearbeitung erstellen
     def create_new_window(self, back):
         self.new_window = tk.Toplevel(self.fenster)
         self.new_window.geometry("1000x600")

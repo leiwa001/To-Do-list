@@ -55,7 +55,7 @@ class Front:
         new_user_label.place(relx=0.33, rely=0.1)
 
         accept_button = tk.Button(new_user_window, text="Akzeptieren", 
-                                  command= lambda: [back.new_user_back(entry.get()), new_user_window.destroy()],
+                                  command= lambda: [back.new_user_back(entry.get()), self.fenster_erstellen(back, entry.get())],
                                     bg="#8F8681",
                                     fg="white")
         accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
@@ -65,6 +65,7 @@ class Front:
 
 
     def fenster_erstellen(self, back, user):
+        self.master.destroy()
         self.fenster = tk.Tk()
 
         self.user = user

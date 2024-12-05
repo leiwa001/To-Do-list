@@ -59,7 +59,6 @@ class Back:
 
     # Funktion für Speichern in Json File
     def save_task(self, user):
-
         path_name = f"mylist_{user}.json"
         path = Path(path_name)
 
@@ -68,7 +67,6 @@ class Back:
 
     # Funktion für Laden aus Json File
     def load_task(self, aufgabenliste, user):
-
         path_name = f"mylist_{user}.json"
         path = Path(path_name)
 
@@ -136,11 +134,17 @@ class Back:
         sel_dict = self.dict_list[dict_index]
         sel_dict["task"] = name
 
-
     def del_user(self, user):
         self.user_list.remove(user)
         print(self.user_list)
 
         path = Path("user_list.json")
-        task_list = json.dumps(self.user_list)
-        path.write_text(task_list)
+
+        if self.user_list == []:
+            self.user_list.append("user1")
+            task_list = json.dumps(self.user_list)
+            path.write_text(task_list)
+
+        else:
+            task_list = json.dumps(self.user_list)
+            path.write_text(task_list)

@@ -57,7 +57,8 @@ class Front:
         entry = tk.Entry(new_user_window, bd=0, width=80, bg="#E1DCD9", fg="black")
         entry.bind(
             "<Return>",
-            lambda event: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())])
+            lambda event: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())],
+        )
 
         entry.place(relx=0.2, rely=0.2)
 
@@ -140,7 +141,9 @@ class Front:
         self.lade_label.place(relx=0.36, rely=0.45)
 
         # Exit Button
-        exit_button = tk.Button(self.fenster, text="Beenden", command= lambda: self.fenster.destroy(), bg="#8B0000", fg="white")
+        exit_button = tk.Button(
+            self.fenster, text="Beenden", command=lambda: self.fenster.destroy(), bg="#8B0000", fg="white"
+        )
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
         # Bearbeiten-Button
@@ -186,13 +189,20 @@ class Front:
         )
         self.back_button.place(relx=0.05, rely=0.018, width=100, height=30)
 
-
-        user_loesch_button = tk.Button(self.fenster, text="User löschen",
-                                       command= lambda: [self.delete_user(self.user), back.del_user(self.user), self.fenster.destroy(), self.__init__(back)], bg="#8B0000", fg="white")
+        user_loesch_button = tk.Button(
+            self.fenster,
+            text="User löschen",
+            command=lambda: [
+                self.delete_user(self.user),
+                back.del_user(self.user),
+                self.fenster.destroy(),
+                self.__init__(back),
+            ],
+            bg="#8B0000",
+            fg="white",
+        )
 
         user_loesch_button.place(relx=0.215, rely=0.85, width=100, height=40)
-
-
 
         back.load_task(self.aufgabenliste, self.user)
 
@@ -242,9 +252,8 @@ class Front:
         self.speicher_label.config(text="\n")
         self.lade_label.config(text="\n")
 
-
     def delete_user(self, user):
-        print("delete" + user )
+        print("delete" + user)
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index, back):

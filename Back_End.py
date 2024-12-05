@@ -16,7 +16,31 @@ class Back:
             "erstellung": "",
         }
 
-        self.user_list = ["user1", "user2", "user3"]
+        self.user_list = ["user1"]
+        self.get_user_list()
+
+    def get_user_list(self):
+        path = Path("user_list_test.json")
+        if path.exists():
+            task_list = path.read_text()
+            self.user_list = json.loads(task_list)
+        else:
+            task_list = json.dumps(self.user_list)
+            path.write_text(task_list )
+
+        task_list = path.read_text()
+        self.user_list = json.loads(task_list)
+
+    def new_user_back(self, username):
+        print(username)
+        self.user_list.append(username)
+        path = Path("user_list_test.json")
+        task_list = json.dumps(self.user_list)
+        path.write_text(task_list )
+        print(self.user_list)
+
+
+
 
     def get_user(self):
         return self.user_list

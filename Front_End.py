@@ -8,7 +8,7 @@ class Front:
         self.master = tk.Tk()
 
         self.master.geometry("1200x700")
-        self.master.title("Nutzer")
+        self.master.title("User wählen")
         self.master.config(bg="#E8D0B9")
 
         self.user_list = back.get_user()
@@ -22,7 +22,7 @@ class Front:
         drop.config(bg="#C0A08F", fg="white", font="Arial 20")
 
         drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")
-        drop.place(relx=0.3, rely=0.25, width=500, height=80)
+        drop.place(relx=0.3, rely=0.2, width=500, height=80)
 
         choose_button = tk.Button(
             self.master,
@@ -32,9 +32,37 @@ class Front:
             fg="white",
             font="Arial 20",
         )
-        choose_button.place(relx=0.34, rely=0.65, width=400, height=80)
+        choose_button.place(relx=0.3, rely=0.4, width=500, height=80)
+
+
+        new_user_button = tk.Button(self.master, text="User hinzufügen", command= lambda: self.new_user(back),  bg="#C0C0C1", fg="white", font="Arial 20")
+        new_user_button.place(relx=0.05, rely=0.8, width=270, height=60)
 
         self.master.mainloop()
+
+    def new_user(self, back):
+        print("new user")
+
+        new_user_window = tk.Toplevel(self.master)
+        new_user_window.title("Neuer User")
+        new_user_window.geometry("1000x700")
+        new_user_window.config(bg="#A67F78")
+
+        entry = tk.Entry(new_user_window, bd=0, width=80, bg="#E1DCD9", fg="black")
+        entry.place(relx=0.2, rely=0.2)
+
+        new_user_label = tk.Label(new_user_window, text="Geben Sie den neuen Usernamen ein:", bg="#A67F78", font=("Arial", 15))
+        new_user_label.place(relx=0.33, rely=0.1)
+
+        accept_button = tk.Button(new_user_window, text="Akzeptieren", 
+                                  command= lambda: [back.new_user_back(entry.get()), new_user_window.destroy()],
+                                    bg="#8F8681",
+                                    fg="white")
+        accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
+
+
+
+
 
     def fenster_erstellen(self, back, user):
         self.fenster = tk.Tk()

@@ -91,28 +91,14 @@ class Back:
             if self.sel_task == (i,):
                 del self.dict_list[i]
 
-    # task für Bearbeitungs-Fenster
-    def get_task_newwindow(self, sel_task):
+    # Werte für Bearbeitungsfenster übergeben
+    def get_values(self, sel_task):
         for i in range(100):
             if sel_task == (i,):
                 sel_dict = self.dict_list[i]
                 task = sel_dict["task"]
-        return task
-
-    # Beschreibung für Bearbeitungs-Fenster
-    def get_beschreibung_newindow(self, sel_task):
-        for i in range(100):
-            if sel_task == (i,):
-                sel_dict = self.dict_list[i]
                 beschreibung = sel_dict["beschreibung"]
-        return beschreibung
-
-    # ausgeähltes dictionary für Bearbeitungsfenster
-    def get_sel_dict_newindow(self, sel_task):
-        for i in range(100):
-            if sel_task == (i,):
-                sel_dict = self.dict_list[i]
-        return sel_dict
+        return task, beschreibung, sel_dict
 
     # speichert Bearbeitung im new_window
     def bearbeitung_speichern(self, eingabe, sel_dict, user):
@@ -155,3 +141,5 @@ class Back:
         else:
             task_list = json.dumps(self.user_list)
             path.write_text(task_list)
+
+

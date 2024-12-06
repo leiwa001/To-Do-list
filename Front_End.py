@@ -306,12 +306,8 @@ class Front:
 
         sel_task = self.aufgabenliste.curselection()
 
-        task = back.get_task_newwindow(sel_task)
-        self.new_window.title(task)
 
-        beschreibung = back.get_beschreibung_newindow(sel_task)
-
-        self.sel_dict = back.get_sel_dict_newindow(sel_task)
+        task, beschreibung, self.sel_dict = back.get_values(sel_task)
 
         speicher_button = tk.Button(
             self.new_window,

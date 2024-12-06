@@ -6,9 +6,9 @@ from time import strftime
 
 class Back:
     def __init__(self):
-        self.dict_list = []
+        self.dict_list = []                             # Liste der einzenen task dictionaries
 
-        self.dictionary = {
+        self.dictionary = {                             # Standard task dictionary
             "task": "Aufgabe1",
             "completed": False,
             "beschreibung": "Beschreibung:\n\n",
@@ -16,9 +16,10 @@ class Back:
             "erstellung": "",
         }
 
-        self.user_list = ["user1"]
+        self.user_list = ["user1"]                      # Liste der erstellten User
         self.get_user_list()
 
+    # Liste der User laden bzw. erst erstellen wenn nötig
     def get_user_list(self):
         path = Path("user_list.json")
         if path.exists():
@@ -31,6 +32,7 @@ class Back:
         task_list = path.read_text()
         self.user_list = json.loads(task_list)
 
+    # Neuen User erstellen
     def new_user_back(self, username):
         print(username)
         self.user_list.append(username)
@@ -42,6 +44,7 @@ class Back:
     def get_user(self):
         return self.user_list
 
+    # neue task erstellen
     def add_task(self, task):
         print(task)
 
@@ -88,6 +91,7 @@ class Back:
             if self.sel_task == (i,):
                 del self.dict_list[i]
 
+    # task für Bearbeitungs-Fenster
     def get_task_newwindow(self, sel_task):
         for i in range(100):
             if sel_task == (i,):
@@ -95,6 +99,7 @@ class Back:
                 task = sel_dict["task"]
         return task
 
+    # Beschreibung für Bearbeitungs-Fenster
     def get_beschreibung_newindow(self, sel_task):
         for i in range(100):
             if sel_task == (i,):
@@ -102,6 +107,7 @@ class Back:
                 beschreibung = sel_dict["beschreibung"]
         return beschreibung
 
+    # ausgeähltes dictionary für Bearbeitungsfenster
     def get_sel_dict_newindow(self, sel_task):
         for i in range(100):
             if sel_task == (i,):
@@ -134,6 +140,7 @@ class Back:
         sel_dict = self.dict_list[dict_index]
         sel_dict["task"] = name
 
+    # entfernt User, falls user_liste leer wäre, wird 'user1' in Liste geschrieben
     def del_user(self, user):
         self.user_list.remove(user)
         print(self.user_list)

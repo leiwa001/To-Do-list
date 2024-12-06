@@ -15,13 +15,13 @@ class Front:
 
         # StringVar erstellen
         clicked = tk.StringVar()
-        clicked.set(self.user_list[0])  #default value setzen
+        clicked.set(self.user_list[0])  # default value setzen
 
         # dropdown menu erstellen
         drop = tk.OptionMenu(self.master, clicked, *self.user_list)
         drop.config(bg="#C0A08F", fg="white", font="Arial 20")
 
-        drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")    #menüzeilen konfigurieren
+        drop["menu"].config(bg="#D8C7B9", fg="white", font="Arial 16")  # menüzeilen konfigurieren
         drop.place(relx=0.3, rely=0.2, width=500, height=80)
 
         # Button um User auszuwählen
@@ -35,7 +35,7 @@ class Front:
         )
         choose_button.place(relx=0.3, rely=0.4, width=500, height=80)
 
-        #Button 'User hinzufügen'
+        # Button 'User hinzufügen'
         new_user_button = tk.Button(
             self.master,
             text="User hinzufügen",
@@ -50,7 +50,6 @@ class Front:
 
     # Fenster um neuen Benutzer zu erstellen
     def new_user(self, back):
-
         new_user_window = tk.Toplevel(self.master)
         new_user_window.title("Neuer User")
         new_user_window.geometry("1000x700")
@@ -173,7 +172,7 @@ class Front:
         aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:", bg="#7991a2")
         aufgaben_label.place(relx=0.79, rely=0.06)
 
-        #Button um task zu löschen
+        # Button um task zu löschen
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",

@@ -6,9 +6,9 @@ from time import strftime
 
 class Back:
     def __init__(self):
-        self.dict_list = []                             # Liste der einzenen task dictionaries
+        self.dict_list = []  # Liste der einzenen task dictionaries
 
-        self.dictionary = {                             # Standard task dictionary
+        self.dictionary = {  # Standard task dictionary
             "task": "Aufgabe1",
             "completed": False,
             "beschreibung": "Beschreibung:\n\n",
@@ -16,7 +16,7 @@ class Back:
             "erstellung": "",
         }
 
-        self.user_list = ["user1"]                      # Liste der erstellten User
+        self.user_list = ["user1"]  # Liste der erstellten User
         self.get_user_list()
 
     # Liste der User laden bzw. erst erstellen wenn nötig

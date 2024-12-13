@@ -28,3 +28,8 @@ Zudem können mehrere Benutzer individuell angelegt werden, sodass jeder Benutze
 - [@leiwa001](https://www.github.com/leiwa001)
 
 
+## Voraussetzungen
+
+- python
+- pip 
+

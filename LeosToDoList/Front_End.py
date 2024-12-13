@@ -73,7 +73,11 @@ class Front:
         accept_button = tk.Button(
             new_user_window,
             text="Akzeptieren",
-            command=lambda: [self.back.new_user_back(entry.get()), self.back.__init__(), self.fenster_erstellen(self.back, entry.get())],
+            command=lambda: [
+                self.back.new_user_back(entry.get()),
+                self.back.__init__(),
+                self.fenster_erstellen(self.back, entry.get()),
+            ],
             bg="#8F8681",
             fg="white",
         )
@@ -178,7 +182,7 @@ class Front:
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
-            command=lambda: [self.back.delete_task(self.aufgabenliste), self.change_loesch_label],
+            command=lambda: [self.back.delete_task(self.aufgabenliste), self.change_loesch_label()],
             bg="#535D55",
             fg="white",
         )
@@ -219,6 +223,7 @@ class Front:
 
     # Ändert task-label und fügt task in liste ein
     def change_label_add_task(self, task):
+        self.delete_label()
         if task == "":
             self.task_label.config(text="Gib zuerst eine Aufgabe ein!")
         else:
@@ -226,40 +231,25 @@ class Front:
             self.task_label.config(text=bestaetigung_task)
             self.eingabefeld.delete(0, tk.END)
             self.aufgabenliste.insert(tk.END, task)
-        self.label_loeschen_eingabe()
 
     def change_speicher_label(self):
+        self.delete_label()
         self.speicher_label.config(text="Ihre Aufgaben wurden gespeichert!")
-        self.label_loeschen_speichern()
 
     def change_lade_label(self):
+        self.delete_label()
         self.lade_label.config(text="Ihre Aufgaben wurden geladen!")
-        self.label_loeschen_laden()
 
     def change_loesch_label(self):
+        self.delete_label()
         self.loesch_label.config(text="Die ausgewählte Aufgabe\n wurde gelöscht!")
-        self.label_loeschen_loeschen()
 
-    # Loesch-Funktionen, um nur 1 Label gleichzeitig anzuzeigen
-    def label_loeschen_eingabe(self):
-        self.speicher_label.config(text="\n")
-        self.lade_label.config(text="\n")
-        self.loesch_label.config(text="\n")
-
-    def label_loeschen_speichern(self):
-        self.task_label.config(text="\n")
-        self.lade_label.config(text="\n")
-        self.loesch_label.config(text="\n")
-
-    def label_loeschen_laden(self):
-        self.task_label.config(text="\n")
-        self.speicher_label.config(text="\n")
-        self.loesch_label.config(text="\n")
-
-    def label_loeschen_loeschen(self):
+    # Loesch-Funktion, um nur 1 Label gleichzeitig anzuzeigen
+    def delete_label(self):
         self.task_label.config(text="\n")
         self.speicher_label.config(text="\n")
         self.lade_label.config(text="\n")
+        self.loesch_label.config(text="\n")
 
     def delete_user(self, user):
         print("delete" + user)
@@ -307,7 +297,6 @@ class Front:
         self.new_window.config(bg="#E4B660")
 
         sel_task = self.aufgabenliste.curselection()
-
 
         task, beschreibung, self.sel_dict = self.back.get_values(sel_task)
 

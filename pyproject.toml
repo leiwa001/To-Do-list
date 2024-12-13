@@ -1,3 +1,32 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.sdist]
+ignore-vcs = true
+
+[project]
+name = "LeosToDoList"
+version = "0.1.5"
+description = 'to-do-list manager'
+readme = "README.md"
+license = {text = "MIT"}
+requires-python = " >= 3.10"
+authors = [
+  { name = "Leo Iwanetzki"}, 
+  { email = "leo@iwanetzki.de"},
+  ]
+  dependencies = [
+    "tkcalendar >= 1.6.1",
+    "babel >= 2.16.0",
+  ]
+
+[tool.hatch.build.targets.wheel]
+packages = ["LeosToDoList"]
+
+[project.scripts]
+LeosToDoList = "LeosToDoList.main:main"
+
 
 [tool.ruff]
 line-length = 125

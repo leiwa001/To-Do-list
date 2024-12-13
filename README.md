@@ -22,6 +22,19 @@ Die Aufgaben mit den festgelegten Daten werden in einem JSON-file gespeichert.
 
 Zudem können mehrere Benutzer individuell angelegt werden, sodass jeder Benutzer auf seinen eigenen Json-File mit seiner eigenen Aufgaben-Übersicht zugreifen kann. 
 
+## Mögliche Fehler
+
+Bei dem Fehlercode:
+      
+         _tkinter.TclError: no display name and no $DISPLAY environment variable
+
+Führen Sie in Ihrer Konsole folgenden Befehl aus:
+
+        export DISPLAY=:0.0
+
+Nun versuchen Sie erneut das Programm zu starten per:
+
+        LeosToDoList
 
 ## Autor
 

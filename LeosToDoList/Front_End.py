@@ -11,7 +11,9 @@ class Front:
         self.master.title("User wählen")
         self.master.config(bg="#E8D0B9")
 
-        self.user_list = back.get_user()
+        self.back = back
+
+        self.user_list = self.back.get_user()
 
         # StringVar erstellen
         clicked = tk.StringVar()
@@ -28,7 +30,7 @@ class Front:
         choose_button = tk.Button(
             self.master,
             text="Auswählen",
-            command=lambda: [self.fenster_erstellen(back, clicked.get())],
+            command=lambda: [self.fenster_erstellen(clicked.get())],
             bg="#A09391",
             fg="white",
             font="Arial 20",
@@ -39,7 +41,7 @@ class Front:
         new_user_button = tk.Button(
             self.master,
             text="User hinzufügen",
-            command=lambda: self.new_user(back),
+            command=self.new_user,
             bg="#C0C0C1",
             fg="white",
             font="Arial 20",
@@ -49,7 +51,7 @@ class Front:
         self.master.mainloop()
 
     # Fenster um neuen Benutzer zu erstellen
-    def new_user(self, back):
+    def new_user(self):
         new_user_window = tk.Toplevel(self.master)
         new_user_window.title("Neuer User")
         new_user_window.geometry("1000x700")
@@ -58,7 +60,7 @@ class Front:
         entry = tk.Entry(new_user_window, bd=0, width=80, bg="#E1DCD9", fg="black")
         entry.bind(
             "<Return>",
-            lambda event: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())],
+            lambda event: [self.back.new_user_back(entry.get()), self.back.__init__(), self.fenster_erstellen(entry.get())],
         )
 
         entry.place(relx=0.2, rely=0.2)
@@ -71,14 +73,14 @@ class Front:
         accept_button = tk.Button(
             new_user_window,
             text="Akzeptieren",
-            command=lambda: [back.new_user_back(entry.get()), back.__init__(), self.fenster_erstellen(back, entry.get())],
+            command=lambda: [self.back.new_user_back(entry.get()), self.back.__init__(), self.fenster_erstellen(self.back, entry.get())],
             bg="#8F8681",
             fg="white",
         )
         accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
 
     # Task-Fenster erstellen
-    def fenster_erstellen(self, back, user):
+    def fenster_erstellen(self, user):
         self.master.destroy()
         self.fenster = tk.Tk()
 
@@ -93,7 +95,7 @@ class Front:
         self.eingabefeld = tk.Entry(self.fenster, bd=0, width=80, bg="#c3cccf", fg="black")
         self.eingabefeld.bind(
             "<Return>",
-            lambda event: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
+            lambda event: [self.back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
         )
         self.eingabefeld.place(relx=0.2, rely=0.1)
 
@@ -109,7 +111,7 @@ class Front:
         task_button = tk.Button(
             self.fenster,
             text="Bestätigen",
-            command=lambda: [back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
+            command=lambda: [self.back.add_task(self.eingabefeld.get()), self.change_label_add_task(self.eingabefeld.get())],
             bg="#3c3735",
             fg="white",
         )
@@ -120,7 +122,7 @@ class Front:
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
-            command=lambda: [back.save_task(self.user), self.change_speicher_label()],
+            command=lambda: [self.back.save_task(self.user), self.change_speicher_label()],
             bg="#535D55",
             fg="white",
         )
@@ -130,7 +132,7 @@ class Front:
         lade_button = tk.Button(
             self.fenster,
             text="Laden",
-            command=lambda: [back.load_task(self.aufgabenliste, self.user), self.change_lade_label()],
+            command=lambda: [self.back.load_task(self.aufgabenliste, self.user), self.change_lade_label()],
             bg="#535D55",
             fg="white",
         )
@@ -150,7 +152,7 @@ class Front:
 
         # Bearbeiten-Button
         bearbeiten_button = tk.Button(
-            self.fenster, text="Bearbeiten", command=lambda: [self.create_new_window(back)], bg="#c2cccf", fg="black"
+            self.fenster, text="Bearbeiten", command=self.create_new_window, bg="#c2cccf", fg="black"
         )
         bearbeiten_button.place(relx=0.9, rely=0.03, width=100, height=40)
 
@@ -166,7 +168,7 @@ class Front:
 
         # mit Doppelklick bearbeiten
         self.aufgabenliste.bind(
-            "<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"), back)
+            "<Double-1>", lambda event: self.task_edit(self.aufgabenliste.index(f"@{event.x},{event.y}"))
         )
 
         aufgaben_label = tk.Label(self.fenster, text="Deine Aufgaben:", bg="#7991a2")
@@ -176,7 +178,7 @@ class Front:
         loesch_button = tk.Button(
             self.fenster,
             text="Löschen",
-            command=lambda: [back.delete_task(self.aufgabenliste), self.change_loesch_label()],
+            command=lambda: [self.back.delete_task(self.aufgabenliste), self.change_loesch_label],
             bg="#535D55",
             fg="white",
         )
@@ -189,7 +191,7 @@ class Front:
         self.back_button = tk.Button(
             self.fenster,
             text="Zurück",
-            command=lambda: [self.fenster.destroy(), self.__init__(back)],
+            command=lambda: [self.fenster.destroy(), self.__init__(self.back)],
             bg="#c2cccf",
             fg="black",
         )
@@ -201,9 +203,9 @@ class Front:
             text="User löschen",
             command=lambda: [
                 self.delete_user(self.user),
-                back.del_user(self.user),
+                self.back.del_user(self.user),
                 self.fenster.destroy(),
-                self.__init__(back),
+                self.__init__(self.back),
             ],
             bg="#8B0000",
             fg="white",
@@ -211,7 +213,7 @@ class Front:
 
         user_loesch_button.place(relx=0.215, rely=0.85, width=100, height=40)
 
-        back.load_task(self.aufgabenliste, self.user)
+        self.back.load_task(self.aufgabenliste, self.user)
 
         self.fenster.mainloop()
 
@@ -263,7 +265,7 @@ class Front:
         print("delete" + user)
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
-    def task_edit(self, index, back):
+    def task_edit(self, index):
         print(index)
 
         self.aufgabenliste.edit_item = index
@@ -274,7 +276,7 @@ class Front:
             "<Return>",
             lambda event: [
                 self.accept_edit(event.widget.get()),
-                back.accept_edit(index, event.widget.get()),
+                self.back.accept_edit(index, event.widget.get()),
                 event.widget.destroy(),
             ],
         )
@@ -299,7 +301,7 @@ class Front:
         self.aufgabenliste.insert(self.aufgabenliste.edit_item, new_data)
 
     # neues Fenster für Bearbeitung erstellen
-    def create_new_window(self, back):
+    def create_new_window(self):
         self.new_window = tk.Toplevel(self.fenster)
         self.new_window.geometry("1000x600")
         self.new_window.config(bg="#E4B660")
@@ -307,13 +309,13 @@ class Front:
         sel_task = self.aufgabenliste.curselection()
 
 
-        task, beschreibung, self.sel_dict = back.get_values(sel_task)
+        task, beschreibung, self.sel_dict = self.back.get_values(sel_task)
 
         speicher_button = tk.Button(
             self.new_window,
             text="Speichern",
             command=lambda: [
-                back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
+                self.back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
                 self.new_window.destroy(),
             ],
             bg="#7e5a16",
@@ -334,7 +336,7 @@ class Front:
             self.new_window,
             text="Auswählen",
             command=lambda: [
-                back.get_datum(self.sel_dict, self.cal.get_date()),
+                self.back.get_datum(self.sel_dict, self.cal.get_date()),
                 self.cal_label.config(text="Fälligkeitstermin: " + self.cal.get_date()),
             ],
             bg="#7e5a16",
@@ -354,7 +356,7 @@ class Front:
         )
         faellig_label.place(relx=0.1, rely=0.25)
 
-        check_status = back.get_check_status(self.sel_dict)
+        check_status = self.back.get_check_status(self.sel_dict)
         self.check_label = tk.Label(self.new_window, text=check_status, font="Arial 12", bg="#E4B660")
         self.check_label.place(relx=0.11, rely=0.32)
 
@@ -368,7 +370,7 @@ class Front:
             variable=self.var1,
             onvalue=1,
             offvalue=0,
-            command=lambda: [back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
+            command=lambda: [self.back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
             bg="#E4B660",
         )
         check.place(relx=0.09, rely=0.32)

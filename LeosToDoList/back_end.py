@@ -4,7 +4,6 @@ from pathlib import Path
 from time import strftime
 import logging
 
-logging.basicConfig(level=logging.INFO)
 
 
 class Back:

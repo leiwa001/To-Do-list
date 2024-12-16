@@ -3,8 +3,6 @@ import tkinter as tk
 from tkcalendar import Calendar
 import logging
 
-logging.basicConfig(level=logging.INFO)
-
 
 class Front:
     def __init__(self, back):
@@ -81,7 +79,7 @@ class Front:
             command=lambda: [
                 self.back.new_user_back(entry.get()),
                 self.back.__init__(),
-                self.fenster_erstellen(self.back, entry.get()),
+                self.fenster_erstellen(entry.get()),
             ],
             bg="#8F8681",
             fg="white",

@@ -2,16 +2,17 @@ from .back_end import Back
 from .front_end import Front
 import logging
 
-logging.basicConfig(
-    level=logging.DEBUG,
-    filename="all_data.log",
-    encoding="utf-8",
-    filemode="a",
-    format="{asctime} - {levelname} - {message}",
-    style="{",
-    datefmt="%Y-%m-%d %H:%M",
-    )
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s %(name)-12s %(levelname)-8s %(message)s',
+                    datefmt='%m-%d %H:%M',
+                    filename='myapp.log',
+                    filemode='a')
 
+console = logging.StreamHandler()
+console.setLevel(logging.INFO)
+formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+console.setFormatter(formatter)
+logging.getLogger('').addHandler(console)
 
 def main():
     logging.info("Gui wird gestartet...")

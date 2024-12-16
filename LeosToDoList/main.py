@@ -1,8 +1,13 @@
 from .back_end import Back
 from .front_end import Front
+import logging
+
+logging.basicConfig(level=logging.INFO)
+
+
 
 def main():
-    print("GUI wird gestartet")
+    logging.info("Gui wird gestartet...")
     back = Back()
     e = Front(back)
     

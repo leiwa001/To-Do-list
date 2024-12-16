@@ -2,6 +2,9 @@ import json
 import tkinter as tk
 from pathlib import Path
 from time import strftime
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Back:
@@ -32,24 +35,26 @@ class Back:
         task_list = path.read_text()
         self.user_list = json.loads(task_list)
 
+        logging.debug("User-Liste abgerufen")
+
     # Neuen User erstellen
     def new_user_back(self, username):
-        print(username)
+        logging.info(f"Neuer User: {username}")
         self.user_list.append(username)
         path = Path("user_list.json")
         task_list = json.dumps(self.user_list)
         path.write_text(task_list)
-        print(self.user_list)
+        logging.debug(f"Neue user_liste: {self.user_list}")
 
     def get_user(self):
         return self.user_list
 
     # neue task erstellen
     def add_task(self, task):
-        print(task)
+        logging.debug(f"'{task}' soll hinzugefügt werden.")
 
         if task == "":
-            print("leer")
+            logging.info("Geben Sie erst eine Aufgabe ein")
 
         else:
             self.dictionary["task"] = task
@@ -58,7 +63,7 @@ class Back:
             new_dict = self.dictionary.copy()
             self.dict_list.append(new_dict)
 
-            print(self.dict_list)
+            logging.debug(self.dict_list)
 
     # Funktion für Speichern in Json File
     def save_task(self, user):
@@ -67,6 +72,7 @@ class Back:
 
         self.task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(self.task_list)
+        logging.debug("task_list wurde gespeichert")
 
     # Funktion für Laden aus Json File
     def load_task(self, aufgabenliste, user):
@@ -80,7 +86,7 @@ class Back:
                 task = wert["task"]
                 aufgabenliste.insert(tk.END, task)
         else:
-            print("Keine Aufgaben gespeichert")
+            logging.info("Keine Aufgaben gespeichert")
 
     # Funktion für Lösch Button
     def delete_task(self, aufgabenliste):
@@ -90,6 +96,7 @@ class Back:
         for i in range(100):
             if self.sel_task == (i,):
                 del self.dict_list[i]
+        logging.debug(f"{self.sel_task} gelöscht.")
 
     # Werte für Bearbeitungsfenster übergeben
     def get_values(self, sel_task):
@@ -109,6 +116,7 @@ class Back:
 
         task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(task_list)
+        logging.info("Bearbeitung wurde gespeichert")
 
     # Faelligkeitsdatum abrufen
     def get_datum(self, sel_dict, date):
@@ -133,7 +141,6 @@ class Back:
     # entfernt User, falls user_liste leer wäre, wird 'user1' in Liste geschrieben
     def del_user(self, user):
         self.user_list.remove(user)
-        print(self.user_list)
 
         path = Path("user_list.json")
 
@@ -145,5 +152,7 @@ class Back:
         else:
             task_list = json.dumps(self.user_list)
             path.write_text(task_list)
+
+        logging.debug(self.user_list)
 
 

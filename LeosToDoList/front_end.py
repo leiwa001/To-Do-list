@@ -1,10 +1,14 @@
 import tkinter as tk
 
 from tkcalendar import Calendar
+import logging
+
+logging.basicConfig(level=logging.INFO)
 
 
 class Front:
     def __init__(self, back):
+
         self.master = tk.Tk()
 
         self.master.geometry("1200x700")
@@ -47,7 +51,8 @@ class Front:
             font="Arial 20",
         )
         new_user_button.place(relx=0.05, rely=0.8, width=270, height=60)
-
+        
+        logging.debug("User-Auswal-Fenster erstellt")
         self.master.mainloop()
 
     # Fenster um neuen Benutzer zu erstellen
@@ -82,6 +87,7 @@ class Front:
             fg="white",
         )
         accept_button.place(relx=0.45, rely=0.4, width=120, height=40)
+        logging.debug("User-erstellen-Fenster erstellt")
 
     # Task-Fenster erstellen
     def fenster_erstellen(self, user):
@@ -89,7 +95,7 @@ class Front:
         self.fenster = tk.Tk()
 
         self.user = user
-        print(self.user)
+        logging.debug(f"Ausgewählter user: {self.user}")
 
         self.fenster.geometry("1200x700")
         self.fenster.title(self.user)
@@ -150,7 +156,7 @@ class Front:
 
         # Exit Button
         exit_button = tk.Button(
-            self.fenster, text="Beenden", command=lambda: self.fenster.destroy(), bg="#8B0000", fg="white"
+            self.fenster, text="Beenden", command=lambda: [logging.info("GUI beendet!"), self.fenster.destroy()], bg="#8B0000", fg="white"
         )
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
@@ -219,6 +225,7 @@ class Front:
 
         self.back.load_task(self.aufgabenliste, self.user)
 
+        logging.debug("task-fenster erstellt")
         self.fenster.mainloop()
 
     # Ändert task-label und fügt task in liste ein
@@ -252,11 +259,10 @@ class Front:
         self.loesch_label.config(text="\n")
 
     def delete_user(self, user):
-        print("delete" + user)
+        logging.info("delete " + user)
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index):
-        print(index)
 
         self.aufgabenliste.edit_item = index
         text = self.aufgabenliste.get(index)
@@ -280,12 +286,12 @@ class Front:
 
     # bei 'ESC' berabeiten abbrechen
     def cancel_edit(self, event):
-        print("exit")
+        logging.debug("exit name bearbeiten per esc")
         event.widget.destroy()
 
     # bei 'Enter' alten Eintrag löschen und neuen hinzufügen
     def accept_edit(self, new_data):
-        print("accept")
+        logging.debug("accept name bearbeiten per enter")
 
         self.aufgabenliste.delete(self.aufgabenliste.edit_item)
         self.aufgabenliste.insert(self.aufgabenliste.edit_item, new_data)
@@ -297,6 +303,7 @@ class Front:
         self.new_window.config(bg="#E4B660")
 
         sel_task = self.aufgabenliste.curselection()
+        logging.debug(f"Bearbeitung für: {sel_task}")
 
         task, beschreibung, self.sel_dict = self.back.get_values(sel_task)
 
@@ -363,6 +370,8 @@ class Front:
             bg="#E4B660",
         )
         check.place(relx=0.09, rely=0.32)
+
+        logging.debug("Task-Bearbeiten-Fenster erstellt")
 
     def change_check_label(self):
         if self.var1.get() == 1:

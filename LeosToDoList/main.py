@@ -1,5 +1,5 @@
-from .Back_End import Back
-from .Front_End import Front
+from .back_end import Back
+from .front_end import Front
 
 def main():
     print("GUI wird gestartet")

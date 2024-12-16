@@ -122,7 +122,7 @@ class Front:
 
         task_button.place(relx=0.41, rely=0.2, width=100, height=40)
 
-        # Button, um Daten in Json zu speichern
+        # Button, um Daten in Json-file zu speichern
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
@@ -132,7 +132,7 @@ class Front:
         )
         speicher_button.place(relx=0.56, rely=0.85, width=100, height=40)
 
-        # Button, um Daten aus Json zu laden
+        # Button, um Daten aus Json-file zu laden
         lade_button = tk.Button(
             self.fenster,
             text="Laden",

@@ -6,7 +6,7 @@ from time import strftime
 
 class Back:
     def __init__(self):
-        self.dict_list = []  # Liste der einzenen task dictionaries
+        self.dict_list = []  # Liste der einzelnen task dictionaries
 
         self.dictionary = {  # Standard task dictionary
             "task": "Aufgabe1",
@@ -110,18 +110,22 @@ class Back:
         task_list = json.dumps(self.dict_list, indent=4)
         path.write_text(task_list)
 
+    # Faelligkeitsdatum abrufen
     def get_datum(self, sel_dict, date):
         sel_dict["faelligkeit"] = date
 
+    # completed-Status abrufen
     def get_check_status(self, sel_dict):
         return "  Abgeschlossen!" if sel_dict["completed"] else "  Noch nicht abgeschlossen"
 
+    # Wert der Checkbox-Variable abrufen
     def checkbox(self, sel_dict, variable):
         if variable == 1:
             sel_dict["completed"] = True
         else:
             sel_dict["completed"] = False
 
+    # mit Doppelklick bearbeiteter Name auch in dictionary speichern
     def accept_edit(self, dict_index, name):
         sel_dict = self.dict_list[dict_index]
         sel_dict["task"] = name

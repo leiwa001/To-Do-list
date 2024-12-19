@@ -1,9 +1,8 @@
 import json
+import logging
 import tkinter as tk
 from pathlib import Path
 from time import strftime
-import logging
-
 
 
 class Back:
@@ -153,5 +152,3 @@ class Back:
             path.write_text(task_list)
 
         logging.debug(self.user_list)
-
-

@@ -7,7 +7,7 @@ ignore-vcs = true
 
 [project]
 name = "LeosToDoList"
-version = "0.1.8"
+version = "1.0.0"
 description = 'to-do-list manager'
 readme = "README.md"
 license = {text = "MIT"}

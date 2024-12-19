@@ -1,12 +1,11 @@
+import logging
 import tkinter as tk
 
 from tkcalendar import Calendar
-import logging
 
 
 class Front:
     def __init__(self, back):
-
         self.master = tk.Tk()
 
         self.master.geometry("1200x700")
@@ -49,7 +48,7 @@ class Front:
             font="Arial 20",
         )
         new_user_button.place(relx=0.05, rely=0.8, width=270, height=60)
-        
+
         logging.debug("User-Auswal-Fenster erstellt")
         self.master.mainloop()
 
@@ -142,7 +141,11 @@ class Front:
 
         # Exit Button
         exit_button = tk.Button(
-            self.fenster, text="Beenden", command=lambda: [logging.info("GUI beendet!"), self.fenster.destroy()], bg="#8B0000", fg="white"
+            self.fenster,
+            text="Beenden",
+            command=lambda: [logging.info("GUI beendet!"), self.fenster.destroy()],
+            bg="#8B0000",
+            fg="white",
         )
         exit_button.place(relx=0.07, rely=0.85, width=100, height=40)
 
@@ -248,7 +251,6 @@ class Front:
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index):
-
         self.aufgabenliste.edit_item = index
         text = self.aufgabenliste.get(index)
         y0 = self.aufgabenliste.bbox(index)[1]
@@ -283,10 +285,9 @@ class Front:
 
     # neues Fenster für Bearbeitung erstellen
     def create_new_window(self):
-
         sel_task = self.aufgabenliste.curselection()
         logging.debug(f"Bearbeitung für: {sel_task}")
-        if  self.aufgabenliste.curselection() == ():
+        if self.aufgabenliste.curselection() == ():
             self.delete_label()
             self.mid_label.config(text="Wählen Sie welche Aufgabe Sie bearbeiten wollen!")
             logging.info("Keine Aufgabe zur Bearbeitung ausgewählt")

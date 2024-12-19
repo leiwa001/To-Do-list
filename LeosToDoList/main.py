@@ -1,7 +1,6 @@
 from .back_end import Back
 from .front_end import Front
 import logging
-
 import argparse
 
 # Logger-Konfiguration

@@ -130,7 +130,7 @@ class Front:
         speicher_button = tk.Button(
             self.fenster,
             text="Speichern",
-            command=lambda: [self.back.save_task(self.user), self.change_speicher_label()],
+            command=lambda: [self.back.save_task(self.user), self.change_mid_label()],
             bg="#535D55",
             fg="white",
         )
@@ -147,10 +147,8 @@ class Front:
         lade_button.place(relx=0.705, rely=0.85, width=100, height=40)
 
         # Label, um Speichern/Laden zu bestätigen
-        self.speicher_label = tk.Label(self.fenster, bg="#7991a2")
-        self.speicher_label.place(relx=0.34, rely=0.45)
-        self.lade_label = tk.Label(self.fenster, bg="#7991a2")
-        self.lade_label.place(relx=0.36, rely=0.45)
+        self.mid_label = tk.Label(self.fenster, bg="#7991a2")
+        self.mid_label.place(relx=0.34, rely=0.45)
 
         # Exit Button
         exit_button = tk.Button(
@@ -237,13 +235,13 @@ class Front:
             self.eingabefeld.delete(0, tk.END)
             self.aufgabenliste.insert(tk.END, task)
 
-    def change_speicher_label(self):
+    def change_mid_label(self):
         self.delete_label()
-        self.speicher_label.config(text="Ihre Aufgaben wurden gespeichert!")
+        self.mid_label.config(text="Ihre Aufgaben wurden gespeichert!")
 
     def change_lade_label(self):
         self.delete_label()
-        self.lade_label.config(text="Ihre Aufgaben wurden geladen!")
+        self.mid_label.config(text="Ihre Aufgaben wurden geladen!")
 
     def change_loesch_label(self):
         self.delete_label()
@@ -252,12 +250,11 @@ class Front:
     # Loesch-Funktion, um nur 1 Label gleichzeitig anzuzeigen
     def delete_label(self):
         self.task_label.config(text="\n")
-        self.speicher_label.config(text="\n")
-        self.lade_label.config(text="\n")
+        self.mid_label.config(text="\n")
         self.loesch_label.config(text="\n")
 
     def delete_user(self, user):
-        logging.info("delete " + user)
+        logging.info("delete user: " + user)
 
     # Einbinden Doppelklick und dann entsprechende Bearbeitung
     def task_edit(self, index):
@@ -296,80 +293,85 @@ class Front:
 
     # neues Fenster für Bearbeitung erstellen
     def create_new_window(self):
-        self.new_window = tk.Toplevel(self.fenster)
-        self.new_window.geometry("1000x600")
-        self.new_window.config(bg="#E4B660")
 
         sel_task = self.aufgabenliste.curselection()
         logging.debug(f"Bearbeitung für: {sel_task}")
+        print(sel_task)
+        if  self.aufgabenliste.curselection() == ():
+            self.mid_label.config(text="Wählen Sie welche Aufgabe Sie bearbeiten wollen!")
+            logging.info("Keine Aufgabe zur Bearbeitung ausgewählt")
+        else:
+            self.new_window = tk.Toplevel(self.fenster)
+            self.new_window.geometry("1000x600")
+            self.new_window.config(bg="#E4B660")
 
-        task, beschreibung, self.sel_dict = self.back.get_values(sel_task)
+            task, beschreibung, self.sel_dict = self.back.get_values(sel_task)
 
-        speicher_button = tk.Button(
-            self.new_window,
-            text="Speichern",
-            command=lambda: [
-                self.back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
-                self.new_window.destroy(),
-            ],
-            bg="#7e5a16",
-            fg="white",
-        )
-        speicher_button.place(relx=0.78, rely=0.85, width=100, height=40)
+            speicher_button = tk.Button(
+                self.new_window,
+                text="Speichern",
+                command=lambda: [
+                    self.back.bearbeitung_speichern(self.textfeld.get("1.0", tk.END), self.sel_dict, self.user),
+                    self.new_window.destroy(),
+                ],
+                bg="#7e5a16",
+                fg="white",
+            )
+            speicher_button.place(relx=0.78, rely=0.85, width=100, height=40)
 
-        task_label = tk.Label(self.new_window, text=f"Aufgabe: '{task}'", font=("Arial", 20), bg="#E4B660")
-        task_label.place(relx=0.42, rely=0.05)
+            task_label = tk.Label(self.new_window, text=f"Aufgabe: '{task}'", font=("Arial", 20), bg="#E4B660")
+            task_label.place(relx=0.42, rely=0.05)
 
-        self.textfeld = tk.Text(self.new_window, height=18, width=30)
-        self.textfeld.place(relx=0.7, rely=0.2)
-        self.textfeld.insert(tk.END, beschreibung)
+            self.textfeld = tk.Text(self.new_window, height=18, width=30)
+            self.textfeld.place(relx=0.7, rely=0.2)
+            self.textfeld.insert(tk.END, beschreibung)
 
-        self.cal = Calendar(self.new_window, selectmode="day", year=2024, month=11, day=10, font="Arial 12")
-        self.cal.place(relx=0.1, rely=0.48)
-        self.cal_button = tk.Button(
-            self.new_window,
-            text="Auswählen",
-            command=lambda: [
-                self.back.get_datum(self.sel_dict, self.cal.get_date()),
-                self.cal_label.config(text="Fälligkeitstermin: " + self.cal.get_date()),
-            ],
-            bg="#7e5a16",
-            fg="white",
-        )
-        self.cal_button.place(relx=0.2, rely=0.85, width=100, height=40)
+            self.cal = Calendar(self.new_window, selectmode="day", year=2024, month=11, day=10, font="Arial 12")
+            self.cal.place(relx=0.1, rely=0.48)
+            self.cal_button = tk.Button(
+                self.new_window,
+                text="Auswählen",
+                command=lambda: [
+                    self.back.get_datum(self.sel_dict, self.cal.get_date()),
+                    self.cal_label.config(text="Fälligkeitstermin: " + self.cal.get_date()),
+                ],
+                bg="#7e5a16",
+                fg="white",
+            )
+            self.cal_button.place(relx=0.2, rely=0.85, width=100, height=40)
 
-        self.cal_label = tk.Label(self.new_window, font="Arial 12", bg="#E4B660")
-        self.cal_label.place(relx=0.4, rely=0.85)
+            self.cal_label = tk.Label(self.new_window, font="Arial 12", bg="#E4B660")
+            self.cal_label.place(relx=0.4, rely=0.85)
 
-        erstellt_label = tk.Label(
-            self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12", bg="#E4B660"
-        )
-        erstellt_label.place(relx=0.1, rely=0.18)
-        faellig_label = tk.Label(
-            self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12", bg="#E4B660"
-        )
-        faellig_label.place(relx=0.1, rely=0.25)
+            erstellt_label = tk.Label(
+                self.new_window, text="Erstellt am: " + self.sel_dict["erstellung"], font="Arial 12", bg="#E4B660"
+            )
+            erstellt_label.place(relx=0.1, rely=0.18)
+            faellig_label = tk.Label(
+                self.new_window, text="Fällig am: " + self.sel_dict["faelligkeit"], font="Arial 12", bg="#E4B660"
+            )
+            faellig_label.place(relx=0.1, rely=0.25)
 
-        check_status = self.back.get_check_status(self.sel_dict)
-        self.check_label = tk.Label(self.new_window, text=check_status, font="Arial 12", bg="#E4B660")
-        self.check_label.place(relx=0.11, rely=0.32)
+            check_status = self.back.get_check_status(self.sel_dict)
+            self.check_label = tk.Label(self.new_window, text=check_status, font="Arial 12", bg="#E4B660")
+            self.check_label.place(relx=0.11, rely=0.32)
 
-        self.var1 = tk.IntVar()
+            self.var1 = tk.IntVar()
 
-        self.var1.set(1) if check_status == "  Abgeschlossen!" else self.var1.set(0)
+            self.var1.set(1) if check_status == "  Abgeschlossen!" else self.var1.set(0)
 
-        check = tk.Checkbutton(
-            self.new_window,
-            text="",
-            variable=self.var1,
-            onvalue=1,
-            offvalue=0,
-            command=lambda: [self.back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
-            bg="#E4B660",
-        )
-        check.place(relx=0.09, rely=0.32)
+            check = tk.Checkbutton(
+                self.new_window,
+                text="",
+                variable=self.var1,
+                onvalue=1,
+                offvalue=0,
+                command=lambda: [self.back.checkbox(self.sel_dict, self.var1.get()), self.change_check_label()],
+                bg="#E4B660",
+            )
+            check.place(relx=0.09, rely=0.32)
 
-        logging.debug("Task-Bearbeiten-Fenster erstellt")
+            logging.debug("Task-Bearbeiten-Fenster erstellt")
 
     def change_check_label(self):
         if self.var1.get() == 1:

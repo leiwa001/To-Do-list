@@ -298,6 +298,7 @@ class Front:
         logging.debug(f"Bearbeitung für: {sel_task}")
         print(sel_task)
         if  self.aufgabenliste.curselection() == ():
+            self.delete_label()
             self.mid_label.config(text="Wählen Sie welche Aufgabe Sie bearbeiten wollen!")
             logging.info("Keine Aufgabe zur Bearbeitung ausgewählt")
         else:

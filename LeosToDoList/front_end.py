@@ -134,17 +134,7 @@ class Front:
             bg="#535D55",
             fg="white",
         )
-        speicher_button.place(relx=0.56, rely=0.85, width=100, height=40)
-
-        # Button, um Daten aus Json-file zu laden
-        lade_button = tk.Button(
-            self.fenster,
-            text="Laden",
-            command=lambda: [self.back.load_task(self.aufgabenliste, self.user), self.change_lade_label()],
-            bg="#535D55",
-            fg="white",
-        )
-        lade_button.place(relx=0.705, rely=0.85, width=100, height=40)
+        speicher_button.place(relx=0.705, rely=0.85, width=100, height=40)
 
         # Label, um Speichern/Laden zu bestätigen
         self.mid_label = tk.Label(self.fenster, bg="#7991a2")
@@ -296,7 +286,6 @@ class Front:
 
         sel_task = self.aufgabenliste.curselection()
         logging.debug(f"Bearbeitung für: {sel_task}")
-        print(sel_task)
         if  self.aufgabenliste.curselection() == ():
             self.delete_label()
             self.mid_label.config(text="Wählen Sie welche Aufgabe Sie bearbeiten wollen!")
